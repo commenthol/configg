@@ -1,0 +1,22 @@
+{
+  "name": "configg",
+  "version": "0.0.0",
+  "description": "node configuration",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/commenthol/configg.git"
+  },
+  "keywords": [
+    "configuration"
+  ],
+  "author": "commenthol <commenthol@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/commenthol/configg/issues"
+  },
+  "homepage": "https://github.com/commenthol/configg"
+}
