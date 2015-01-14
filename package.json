@@ -1,19 +1,50 @@
 {
   "name": "configg",
-  "version": "0.0.0",
-  "description": "node configuration",
+  "description": "A node configuration manager",
+  "version": "0.0.9",
   "main": "index.js",
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "directories": {
+    "test": "test",
+    "doc": "doc"
+  },
+  "dependencies": {
+    "coffee-script": "^1.8.0",
+    "cson": "^1.6.2",
+    "hjson": "^1.4.0",
+    "js-yaml": "^3.2.5",
+    "json5": "^0.4.0",
+    "lodash": "^2.4.1",
+    "properties": "^1.2.1",
+    "toml": "^2.1.1"
+  },
+  "devDependencies": {
+    "mocha": "latest"
+  },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha test/*.mocha.js",
+    "cover": "istanbul cover _mocha --report lcov --report text -- -R dot --check-leaks test/*.mocha.js",
+    "lint": "jshint --show-non-errors *.js */*.js",
+    "doc": "jsdoc -d jsdoc -c jsdoc.json index.js lib/*.js",
+    "clean": "rm -rf jsdoc coverage"
   },
   "repository": {
     "type": "git",
-    "url": "github.com/commenthol/configg.git"
+    "url": "github.com/commenthol/configg"
   },
   "keywords": [
-    "configuration"
+    "conf",
+    "config",
+    "configuration",
+    "node-config",
+    "config-node",
+    "env",
+    "environment"
   ],
   "author": "commenthol <commenthol@gmail.com>",
+  "maintainers": "commenthol <commenthol@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/commenthol/configg/issues"

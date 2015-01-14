@@ -1,0 +1,6 @@
+// myserver settings
+{
+	config: {
+		url: "http://myserver/"
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"config": {
+		"database": {
+			"host": "dbhost",
+			"name": "dbtest",
+			"port": 1529
+		},
+		"array": [
+			1,
+			"2",
+			3.01
+		]
+	},
+	"test": {
+		"url": "http://foo.bar/"
+	},
+	"test@0.1.0": {
+		"cors": false
+	},
+	"common": {
+		"value": "test"
+	}
+}

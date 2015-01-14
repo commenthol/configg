@@ -1,0 +1,12 @@
+// local settings
+{
+	config: {
+		"local": 1
+	},
+	test: {
+		"local": 2
+	},
+	common: {
+		"local": 3
+	}
+}

@@ -1,0 +1,7 @@
+// production settings
+{
+	config: {
+		url: "http://production/",
+    port: 8080
+	}
+}

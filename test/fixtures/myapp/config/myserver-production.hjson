@@ -1,0 +1,9 @@
+// myserver settings
+{
+	config: {
+		database: {
+			host: "dbhost-myserver-prod",
+			name: "dbmyserverprod"
+		}
+	}
+}

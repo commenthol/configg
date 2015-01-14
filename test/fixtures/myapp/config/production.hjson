@@ -1,0 +1,16 @@
+// production settings
+{
+	config: {
+		database: {
+			host: "dbhost-prod",
+			name: "dbprod"
+		}
+	},
+	test: {
+		production: "filename"
+	}
+	common: {
+		value: "production",
+		production: "filename"
+	}
+}

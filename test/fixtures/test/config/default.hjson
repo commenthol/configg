@@ -1,0 +1,11 @@
+// default config
+{
+	// module specifics for npm module "test"
+	config: {
+		url: "http://default/"
+	},
+	// common settings available to all modules
+	common: {
+		value: "test"
+	}
+}
