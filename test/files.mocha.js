@@ -64,7 +64,6 @@ describe('#File', function(){
 		//~ });
 		it('js file', function(){
 			var file = new File(confDir + 'default.js');
-			var obj = file.obj;
 			assertObj(file);
 		});
 		it('json file', function(){

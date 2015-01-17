@@ -16,7 +16,7 @@ describe('#envVar', function(){
 		it('set default NODE_ENV',function(){
 			assert.equal(env.resolve('NODE_ENV', 'development'), 'development');
 		});
-		it('get NODE_ENV from process.env.HOST',function(){
+		it('get NODE_ENV from process.env.NODE_ENV',function(){
 			process.env.NODE_ENV = 'staging';
 			assert.equal(env.resolve('NODE_ENV', 'development'), 'staging');
 		});
@@ -39,35 +39,22 @@ describe('#envVar', function(){
 	});
 
 	describe('resolveHostname', function(){
-		it('resolve hostname from HOST', function(){
-			var exp = 'myserver';
-			process.env.HOST = exp;
-			delete process.env.HOSTNAME;
-
-			assert.equal(process.env.HOST, exp);
-			assert.equal(process.env.HOSTNAME, undefined);
-			assert.equal(env.resolveHostname(),exp);
-		});
 		it('resolve hostname from HOSTNAME', function(){
 			var exp = 'myserver';
-			delete process.env.HOST;
 			process.env.HOSTNAME = exp;
 
-			assert.equal(process.env.HOST, undefined);
 			assert.equal(process.env.HOSTNAME, exp);
 			assert.equal(env.resolveHostname(),exp);
 		});
 		it('resolve hostname from OS', function(){
-			delete process.env.HOST;
 			delete process.env.HOSTNAME;
 
-			assert.equal(process.env.HOST, undefined);
 			assert.equal(process.env.HOSTNAME, undefined);
 			assert.equal(env.resolveHostname(), require('os').hostname());
 		});
-		it('resolve hostname from HOST from commandline', function(){
+		it('resolve hostname from HOSTNAME from commandline', function(){
 			var exp = 'myserver';
-			process.argv.push('--HOST=' + exp);
+			process.argv.push('--HOSTNAME=' + exp);
 
 			assert.equal(env.resolveHostname(),exp);
 		});
@@ -110,6 +97,44 @@ describe('#envVar', function(){
 
 			Object.keys(exp).forEach(function(p){
 				assert.equal(res[p], exp[p]);
+			});
+		});
+
+	});
+
+	describe('delete', function(){
+		it('delete arguments', function(){
+			process.argv = [
+				'node',
+				__filename,
+				'--NODE_ENV=prod',
+				'--NODE_CONFIG_DIR=/opt/config',
+				'--NODE_APP_INSTANCE=4',
+				'--NODE_CONFIG={ "test": 1 }',
+			];
+			env.delvars();
+			var exp = ["--NODE_ENV=prod","DEL","--NODE_APP_INSTANCE=4","DEL"];
+
+			//~ console.log(process.argv);
+			assert.deepEqual(process.argv.slice(2), exp);
+		});
+
+		it('delete env vars', function(){
+			process.env.NODE_ENV='prod',
+			process.env.NODE_CONFIG_DIR='/opt/config',
+			process.env.NODE_APP_INSTANCE=4,
+			process.env.NODE_CONFIG='{ "test": 1 }',
+
+			env.delvars();
+			var exp = {
+				NODE_ENV: "prod",
+				NODE_CONFIG_DIR: undefined,
+				NODE_APP_INSTANCE: 4,
+				NODE_CONFIG: undefined,
+			};
+
+			Object.keys(exp).forEach(function(p){
+				assert.equal(process.env[p], exp[p]);
 			});
 		});
 

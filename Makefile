@@ -12,3 +12,5 @@ v0.11:
 _readme:
 	@ markedpp README.md > o.md; \
 	mv o.md README.md;
+	@ markedpp doc/documentation.md > o.md; \
+	mv o.md doc/documentation.md;

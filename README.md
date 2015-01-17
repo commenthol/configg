@@ -33,7 +33,8 @@ This project is inspired from [node-config][].
 <!-- !toc (minlevel=2 omit="Table of Contents") -->
 
 * [Quick Start](#quick-start)
-  * [Using module overrides](#using-module-overrides)
+  * [Use module overrides](#use-module-overrides)
+* [Documentation](#documentation)
 * [Contribution and License Agreement](#contribution-and-license-agreement)
 * [License](#license)
 
@@ -85,9 +86,8 @@ $ mkdir config
 
 ```js
 /* ./index.js */
-var config = require('configg')(__dirname, true);
+var config = require('configg')(__dirname);
 // `__dirname` needs to point to the directory of your Apps package.json
-// `true` states that this is the Application to run
 
 console.log(config.get('config.backend'));
 ```
@@ -150,11 +150,9 @@ module.exports = {};
 
 ```js
 /* ./index-database.js */
-var config = require('configg')(__dirname, true);  //< use `true` here, as this
-                                                   //< config is for the "Application"
-var database = require('my-database');  //< Always require your modules
-                                        //< after the "Application" config
-                                        //< otherwise an Error is thrown
+var config = require('configg')(__dirname);
+var database = require('my-database');
+
 console.log('---- Application ----');
 console.log(config.get('config.backend'));
 ```
@@ -208,6 +206,9 @@ $ node index-database.js --NODE_ENV=production
 { host: 'production-system', port: 8080, timeout: 3600, path: '/path-on-prod' }
 ```
 
+## Documentation
+
+Further documentation is [here](./doc/documentation.md).
 
 ## Contribution and License Agreement
 
@@ -226,4 +227,5 @@ See [LICENSE][] for more info.
 [The Twelve-Factor App]: https://12factor.net
 [Hjson]: https://laktak.github.io/hjson/
 [node-config]: https://github.com/lorenwest/node-config
+
 

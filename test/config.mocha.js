@@ -10,17 +10,42 @@
 var fs = require('fs');
 var assert = require('assert');
 var Config = require('../lib/config');
+var hashtree = require('hashtree').hashTree;
+
+process.env.SUPPRESS_NO_CONFIG_WARNING = 1;
+
+function log(obj, other) {
+	console.log(JSON.stringify(obj, null, '\t'));
+	if (other) {
+		console.log(hashtree.diff(obj,other));
+		//~ console.log(hashtree.diff(Object.getOwnPropertyNames(obj),Object.getOwnPropertyNames(other)));
+	}
+}
+
+/**
+ * diff o1 with o2. Assert if o1 and o2 are not the same
+ */
+function deepEqual (o1, o2) {
+	var res = hashtree.diff(o1, o2);
+	assert.equal(typeof o1, 'object');
+	assert.equal(typeof o2, 'object');
+	assert.deepEqual(res.diff1, res.diff2);
+	assert.deepEqual(res.diff1, {});
+	assert.deepEqual(res.diff2, {});
+}
 
 describe('#config', function(){
 
-	beforeEach(function(){
+	function clear(){
 		// overwrite any possible env setings
 		'NODE_ENV NODE_CONFIG NODE_CONFIG_DIR'.split(' ')
 		.forEach(function(p){
 			delete(process.env[p]);
 		});
-		process.env.HOST = 'server';
-	});
+		process.env.HOSTNAME = 'server';
+	}
+
+	beforeEach(clear);
 
 	describe('load configs', function(){
 
@@ -35,10 +60,13 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "module-a",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
-			assert.deepEqual(config, exp);
+			deepEqual(config, exp);
 		});
 
 		it('module-b config', function(){
@@ -52,11 +80,13 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "module-b",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
-
-			assert.deepEqual(config, exp);
+			deepEqual(config, exp);
 		});
 
 		it('module-c config', function(){
@@ -70,16 +100,20 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "module-c",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
 
-			assert.deepEqual(config, exp);
+			deepEqual(config, exp);
 		});
 
 		it('module-c config merged with module-a', function(){
+			process.env.NODE_CONFIG_DIR = __dirname + '/fixtures/prj/node_modules/module-a/config';
 			var cconfig = new Config();
-			var configA  = cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-a', true);
+			var configA  = cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-a');
 			var configAC = cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-a/node_modules/module-c');
 			var expA = {
 				"config": {
@@ -89,7 +123,10 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "module-a",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
 			var expAC = {
@@ -101,17 +138,21 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "module-a",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
 
-			assert.deepEqual(configA,  expA);
-			assert.deepEqual(configAC, expAC);
+			deepEqual(configA,  expA);
+			deepEqual(configAC, expAC);
 		});
 
 		it('module-c config merged with module-b', function(){
+			process.env.NODE_CONFIG_DIR = __dirname + '/fixtures/prj/node_modules/module-b/config';
 			var cconfig = new Config();
-			var configB  = cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-b', true);
+			var configB  = cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-b');
 			var configBC = cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-b/node_modules/module-c');
 			var expB = {
 				"config": {
@@ -121,7 +162,10 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "module-b",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
 			var expBC = {
@@ -134,17 +178,21 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "module-b",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
 
-			assert.deepEqual(configB,  expB);
-			assert.deepEqual(configBC, expBC);
+			deepEqual(configB,  expB);
+			deepEqual(configBC, expBC);
 		});
 
 		it('sample-prj config', function(){
+			process.env.NODE_CONFIG_DIR = __dirname + '/fixtures/prj/config';
 			var cconfig = new Config();
-			var config   = cconfig.dir(__dirname + '/fixtures/prj', true);
+			var config   = cconfig.dir(__dirname + '/fixtures/prj');
 			var configA  = cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-a');
 			var configB  = cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-b');
 			var configAC = cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-a/node_modules/module-c');
@@ -157,7 +205,10 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "prj",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
 			var expA = {
@@ -169,7 +220,10 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "prj",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
 			var expB = {
@@ -181,7 +235,10 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "prj",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
 			var expAC = {
@@ -193,7 +250,10 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "prj",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
 			var expBC = {
@@ -206,16 +266,19 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "prj",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
 
 			//~ console.log(JSON.stringify(config, null, '\t'))
-			assert.deepEqual(config,   exp);
-			assert.deepEqual(configA,  expA);
-			assert.deepEqual(configB,  expB);
-			assert.deepEqual(configAC, expAC);
-			assert.deepEqual(configBC, expBC);
+			deepEqual(config,   exp);
+			deepEqual(configA,  expA);
+			deepEqual(configB,  expB);
+			deepEqual(configAC, expAC);
+			deepEqual(configBC, expBC);
 		});
 
 		it('with NODE_CONFIG_DIR', function(){
@@ -223,38 +286,33 @@ describe('#config', function(){
 
 			var cconfig = new Config();
 			var exp = {
-				"name": "",
-				"version": "0.0.0",
-				"dirname": "NODE_CONFIG_DIR",
-				"obj": {
-					"sample-prj": {
-						"prj-default": "origin",
-						"override": "prj-default"
-					},
-					"module-a": {
-						"prj-default": "origin",
-						"override": "prj-default"
-					},
-					"module-b": {
-						"prj-default": "origin",
-						"override": "prj-default"
-					},
-					"module-c": {
-						"prj-default": "origin",
-						"override": "prj-default"
-					},
-					"module-c@0.1.2": {
-						"prj-default": "v0.1.2 only",
-						"override": "prj-default"
-					},
-					"common": {
-						"module": "prj",
-						"type": "default"
-					}
+				"sample-prj": {
+					"prj-default": "origin",
+					"override": "prj-default"
+				},
+				"module-a": {
+					"prj-default": "origin",
+					"override": "prj-default"
+				},
+				"module-b": {
+					"prj-default": "origin",
+					"override": "prj-default"
+				},
+				"module-c": {
+					"prj-default": "origin",
+					"override": "prj-default"
+				},
+				"module-c@0.1.2": {
+					"prj-default": "v0.1.2 only",
+					"override": "prj-default"
+				},
+				"common": {
+					"module": "prj",
+					"type": "default"
 				}
 			};
 
-			assert.deepEqual(cconfig._entriesApp[1], exp);
+			deepEqual(cconfig._entriesApp[1], exp);
 		});
 
 		it('module-a with NODE_CONFIG_DIR', function(){
@@ -271,12 +329,15 @@ describe('#config', function(){
 				},
 				"common": {
 					"module": "prj",
-					"type": "default"
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
 
 			//~ console.log(JSON.stringify(config, null, '\t'));
-			assert.deepEqual(config, exp);
+			deepEqual(config, exp);
 		});
 
 		it('module-a with NODE_CONFIG', function(){
@@ -293,12 +354,15 @@ describe('#config', function(){
 				"common": {
 					"module": "module-a",
 					"type": "default",
-					"NODE_CONFIG": "origin"
+					"NODE_CONFIG": "origin",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
 
 			//~ console.log(JSON.stringify(config, null, '\t'));
-			assert.deepEqual(config, exp);
+			deepEqual(config, exp);
 		});
 
 		it('module-a with NODE_CONFIG which has a get property throws error', function(){
@@ -308,7 +372,7 @@ describe('#config', function(){
 
 			try {
 				var cconfig = new Config();
-				var config = cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-a');
+				cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-a');
 			} catch (e) {
 				err = e;
 			}
@@ -324,17 +388,51 @@ describe('#config', function(){
 			var cconfig = new Config();
 			var config = cconfig.dir(dirname);
 			var exp = {
-				"config": undefined,
-				"common": undefined
+				"config": {},
+				"common": {
+					"NODE_ENV":"development",
+					"NODE_APP_INSTANCE":undefined,
+					"HOSTNAME":"server"
+				}
 			};
-			assert.deepEqual(config, exp);
+
+			deepEqual(config, exp);
+		});
+
+		it('module-a config twice and test isolation', function(){
+			var cconfig = new Config();
+			var configA = cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-a');
+			var configB = cconfig.dir(__dirname + '/fixtures/prj/node_modules/module-a');
+			var exp = {
+				"config": {
+					"module-a": "origin",
+					"override": "module-a",
+					"url": "xtp://module-a"
+				},
+				"common": {
+					"module": "module-a",
+					"type": "default",
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
+				}
+			};
+			// both configs are different objects
+			assert.ok(configA !== configB)
+			// but contain the same values
+			deepEqual(configA, configB);
+			// configs are isolated
+			delete configA.config;
+			deepEqual(configB, exp);
 		});
 	});
 
 	describe('load files', function(){
 		describe('for myapp', function(){
+			clear();
+			process.env.NODE_CONFIG_DIR = __dirname + '/fixtures/myapp/config';
 			var cconfig = new Config();
-			var config = cconfig.dir(__dirname + '/fixtures/myapp', true);
+			var config = cconfig.dir(__dirname + '/fixtures/myapp');
 			var exp = {
 				"config": {
 					"database": {
@@ -351,12 +449,14 @@ describe('#config', function(){
 				},
 				"common": {
 					"value": "test",
-					"local": 3
+					"local": 3,
+					"NODE_ENV": "development",
+					"HOSTNAME": "server",
+					"NODE_APP_INSTANCE": undefined,
 				}
 			};
-
 			it('loads config', function(){
-				assert.deepEqual(config, exp);
+				deepEqual(config, exp);
 			});
 			it('gets config value', function(){
 				assert.deepEqual(config.get('config.database.host'), exp.config.database.host);
@@ -373,25 +473,14 @@ describe('#config', function(){
 			it('undefined key returns config', function(){
 				assert.deepEqual(config.get(), exp);
 			});
-			it('merge new value with config', function(){
-				config.merge({'newkey':'newval'});
-				assert.deepEqual(config.newkey, 'newval');
-			});
-			it('merge new value config.config', function(){
-				config.config.merge({'newkey':'newval'});
-				assert.deepEqual(config.config.newkey, 'newval');
-			});
-			it('merge new value config.common', function(){
-				config.common.merge({'newkey':'newval'});
-				assert.deepEqual(config.common.newkey, 'newval');
-			});
 		});
 
 		it('for myapp in production', function() {
 			process.env.NODE_ENV = 'production';
+			process.env.NODE_CONFIG_DIR = __dirname + '/fixtures/myapp/config';
 
 			var cconfig = new Config();
-			var config = cconfig.dir(__dirname + '/fixtures/myapp', true);
+			var config = cconfig.dir(__dirname + '/fixtures/myapp');
 			var exp = {
 				"config": {
 					"database": {
@@ -409,19 +498,21 @@ describe('#config', function(){
 				"common": {
 					"value": "production",
 					"production": "filename",
-					"local": 3
+					"local": 3,
+					"NODE_ENV": "production",
+					"HOSTNAME": "server"
 				}
 			};
-
 			//~ console.log(JSON.stringify(config,null,'\t'))
-			assert.deepEqual(config, exp);
+			deepEqual(config, exp);
 		});
 
 		it('for myapp on host myserver', function() {
-			process.env.HOST = 'myserver';
+			process.env.HOSTNAME = 'myserver';
+			process.env.NODE_CONFIG_DIR = __dirname + '/fixtures/myapp/config';
 
 			var cconfig = new Config();
-			var config = cconfig.dir(__dirname + '/fixtures/myapp', true);
+			var config = cconfig.dir(__dirname + '/fixtures/myapp');
 			var exp = {
 				"config": {
 					"database": {
@@ -438,20 +529,23 @@ describe('#config', function(){
 				},
 				"common": {
 					"value": "test",
-					"local": 3
+					"local": 3,
+					"NODE_ENV": "development",
+					"HOSTNAME": "myserver"
 				}
 			};
 
 			//~ console.log(JSON.stringify(config,null,'\t'))
-			assert.deepEqual(config, exp);
+			deepEqual(config, exp);
 		});
 
 		it('for myapp in production on host myserver', function() {
 			process.env.NODE_ENV = 'production';
-			process.env.HOST = 'myserver';
+			process.env.HOSTNAME = 'myserver';
+			process.env.NODE_CONFIG_DIR = __dirname + '/fixtures/myapp/config';
 
 			var cconfig = new Config();
-			var config = cconfig.dir(__dirname + '/fixtures/myapp', true);
+			var config = cconfig.dir(__dirname + '/fixtures/myapp');
 			var exp = {
 				"config": {
 					"database": {
@@ -469,12 +563,14 @@ describe('#config', function(){
 				"common": {
 					"value": "production",
 					"production": "filename",
-					"local": 3
+					"local": 3,
+					"NODE_ENV": "production",
+					"HOSTNAME": "myserver"
 				}
 			};
 
 			//~ console.log(JSON.stringify(config,null,'\t'))
-			assert.deepEqual(config, exp);
+			deepEqual(config, exp);
 		});
 
 		it('for module test', function(){
@@ -487,17 +583,20 @@ describe('#config', function(){
 				},
 				"common": {
 					"value": "test",
-					"local": 3
+					"local": 3,
+					"NODE_ENV": "development",
+					"HOSTNAME": "server"
 				}
 			};
 
-			assert.deepEqual(config, exp);
+			deepEqual(config, exp);
 		});
 
 		it('for module test in app context of myapp', function(){
+			process.env.NODE_CONFIG_DIR = __dirname + '/fixtures/myapp/config';
 			var cconfig = new Config();
 			// first "require" from myapp
-			cconfig.dir(__dirname + '/fixtures/myapp', true);
+			cconfig.dir(__dirname + '/fixtures/myapp');
 			// second "require" from module "test"
 			var config = cconfig.dir(__dirname + '/fixtures/test');
 			var exp = {
@@ -508,43 +607,13 @@ describe('#config', function(){
 				},
 				"common": {
 					"value": "test",
-					"local": 3
+					"local": 3,
+					"NODE_ENV": "development",
+					"HOSTNAME": "server"
 				}
 			};
 
-			assert.deepEqual(config, exp);
-		});
-	});
-
-	describe('error cases', function(){
-		it('config required as app-config twice', function(){
-			var err;
-			var exp = "App Config is already set by " + __dirname +
-				"/fixtures/myapp/config/ - overwrite by " + __dirname +
-				"/fixtures/test/config/ is not allowed";
-			try {
-				var cconfig = new Config();
-				var confApp = cconfig.dir(__dirname + '/fixtures/myapp', true);
-				var confMod = cconfig.dir(__dirname + '/fixtures/test', true);
-			} catch (e) {
-				err = e;
-			}
-
-			assert.equal(err.message, exp);
-		});
-		it('module requires config before app', function(){
-			var err;
-			var exp = "Setting Module Config before App Config by " + __dirname +
-				"/fixtures/test/config/ is not allowed";
-			try {
-				var cconfig = new Config();
-				var confMod = cconfig.dir(__dirname + '/fixtures/test');
-				var confApp = cconfig.dir(__dirname + '/fixtures/myapp', true);
-			} catch (e) {
-				err = e;
-			}
-
-			assert.equal(err.message, exp);
+			deepEqual(config, exp);
 		});
 	});
 });

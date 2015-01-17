@@ -151,17 +151,44 @@ describe('#utils', function(){
 			//~ console.log(toObj(files));
 			assert.deepEqual(toObj(files), exp);
 		});
-		it ('read none existing dir', function(){
+		it ('read from not existing dir', function(){
 			var err;
-			var exp = 'Can\'t read dir '+ __dirname +'/fixture/';
-			try {
-				utils.readDir(__dirname + '/fixture/');
-			} catch (e) {
-				err = e;
-			}
-
-			assert.equal(err.message, exp);
+			var exp = undefined;
+			var res = utils.readDir(__dirname + '/fix/');
+			assert.equal(res, exp);
 		});
 	});
+
+	describe('#env', function(){
+		it ('return desired values', function(){
+			var env = {
+				"NODE_ENV": "test",
+				"NODE_APP_INSTANCE": 2,
+				"HOSTNAME": "www",
+				"OTHER": 0
+			};
+			var exp = {
+				"NODE_ENV": "test",
+				"NODE_APP_INSTANCE": 2,
+				"HOSTNAME": "www",
+			};
+			var res = utils.env(env);
+			assert.deepEqual(res, exp);
+		});
+		it ('return desired custom values', function(){
+			var env = {
+				"NODE_ENV": "test",
+				"NODE_APP_INSTANCE": 2,
+				"HOSTNAME": "www",
+				"OTHER": 0
+			};
+			var exp = {
+				"NODE_ENV": "test",
+			};
+			var res = utils.env(env, ['NODE_ENV']);
+			assert.deepEqual(res, exp);
+		});
+	});
+
 });
 

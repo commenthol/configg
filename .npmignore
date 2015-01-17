@@ -1,6 +1,9 @@
 /node_modules
 /coverage
 /jsdoc
+/tmp
 .*
 *.log
 *.tgz
+Makefile
+TODO.md
