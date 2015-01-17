@@ -1,0 +1,19 @@
+/* ./config/production.hjson */
+{
+  config: {
+    backend: {
+      host: "production-system",
+      path: "/path-on-prod"
+    }
+  },
+  "my-database": {
+    host: "production-db",
+    credentials: {
+      user: "admin",
+      pass: "always-on-the-1"
+    }
+  },
+  common: {
+    pool: true
+  }
+}

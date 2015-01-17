@@ -11,8 +11,8 @@ var Config = require('./lib/config');
 /// the global config object
 var globalConfig = new Config();
 
-var M = function(dir) {
-	return globalConfig.dir(dir);
+var M = function(dir, isApp) {
+	return globalConfig.dir(dir, isApp);
 };
 
 /// append the Config class

@@ -1,0 +1,11 @@
+/* ./config/default.hjson */
+{
+  config: {
+    backend: {
+      // configuration values of your app/ module go in here
+      host: "test-system",
+      port: 8080,
+      timeout: 3600
+    }
+  }
+}

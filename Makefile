@@ -1,10 +1,14 @@
-all: 0.8 0.10 0.11
+all: v0.8 v0.10 v0.11
 
-0.8:
+v0.8:
 	n 0.8 && npm test
 
-0.10:
+v0.10:
 	n 0.10 && npm test
 
-0.11:
+v0.11:
 	n 0.11 && npm test
+
+_readme:
+	@ markedpp README.md > o.md; \
+	mv o.md README.md;
