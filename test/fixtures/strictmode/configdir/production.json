@@ -1,0 +1,6 @@
+{
+  "myapp": {
+    "./configdir": true,
+    "production": true
+  }
+}

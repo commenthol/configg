@@ -1,0 +1,8 @@
+{
+  "myapp": {
+    "./configdir": true,
+    "production": true,
+    "instance": 2,
+    "hostname": "server"
+  }
+}

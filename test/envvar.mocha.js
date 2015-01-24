@@ -5,7 +5,7 @@
 
 'use strict';
 
-/* global describe, it */
+/* global describe, it, before */
 
 var assert = require('assert');
 var env = require('../lib/envvar');
@@ -13,6 +13,11 @@ var env = require('../lib/envvar');
 describe('#envVar', function(){
 
 	describe('resolve', function(){
+
+		before(function(){
+			process.env = {};
+		});
+
 		it('set default NODE_ENV',function(){
 			assert.equal(env.resolve('NODE_ENV', 'development'), 'development');
 		});

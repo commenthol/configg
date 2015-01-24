@@ -51,6 +51,11 @@ describe('#File', function(){
 				new File(confDir + 'bad.cson');
 			});
 		});
+		it('try loading a bad json file', function(){
+			assert.throws(function(){
+				new File(confDir + 'bad.json');
+			});
+		});
 	});
 
 	describe('load', function(){

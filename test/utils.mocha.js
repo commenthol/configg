@@ -138,7 +138,13 @@ describe('#utils', function(){
 	describe('#readDir', function(){
 		it ('read existing dir', function(){
 			var files = utils.readDir(__dirname + '/fixtures/');
-			var exp = {"empty":1,"myapp":1,"prj":1,"test":1};
+			var exp = {
+				"empty":1,
+				"myapp":1,
+				"prj":1,
+				"test":1,
+				"strictmode":1,
+			};
 
 			function toObj(arr) {
 				var tmp = {};
@@ -152,10 +158,18 @@ describe('#utils', function(){
 			assert.deepEqual(toObj(files), exp);
 		});
 		it ('read from not existing dir', function(){
-			var err;
-			var exp = undefined;
+			var exp;
 			var res = utils.readDir(__dirname + '/fix/');
 			assert.equal(res, exp);
+		});
+		it ('read from not existing dir in strict mode', function(){
+			var err;
+			try {
+				utils.readDir(__dirname + '/fix/', true);
+			} catch(e) {
+				err = e;
+			}
+			assert.equal(err.message, 'strict mode failed!');
 		});
 	});
 
@@ -187,6 +201,127 @@ describe('#utils', function(){
 			};
 			var res = utils.env(env, ['NODE_ENV']);
 			assert.deepEqual(res, exp);
+		});
+	});
+
+	describe('#strictModeCheck', function(){
+		it('no strict mode set', function(){
+			var env = {
+				"NODE_ENV": "development",
+				"NODE_APP_INSTANCE": 2,
+				"NODE_CONFIG_DIR": '.',
+			};
+			var filesFound = ['default', 'development', 'test', 'production', 'local'];
+			var res = utils.strictModeCheck(env, filesFound);
+			assert.ok(res);
+		});
+		it('NODE_ENV is default', function(){
+			var env = {
+				"NODE_CONFIG_STRICT_MODE": 1,
+				"NODE_ENV": "default",
+				"NODE_APP_INSTANCE": 2,
+				"NODE_CONFIG_DIR": '.',
+			};
+			var filesFound = ['default', 'development', 'test', 'production', 'local'];
+
+			var res = utils.strictModeCheck(env, filesFound);
+			assert.ok(!res);
+		});
+		it('NODE_ENV is local', function(){
+			var env = {
+				"NODE_CONFIG_STRICT_MODE": 1,
+				"NODE_ENV": "local",
+				"NODE_APP_INSTANCE": 2,
+				"NODE_CONFIG_DIR": '.',
+			};
+			var filesFound = ['default', 'development', 'test', 'production', 'local'];
+
+			var res = utils.strictModeCheck(env, filesFound);
+			assert.ok(!res);
+		});
+		it('NODE_ENV is development', function(){
+			var env = {
+				"NODE_CONFIG_STRICT_MODE": 1,
+				"NODE_ENV": "development",
+				"NODE_APP_INSTANCE": 2,
+				"NODE_CONFIG_DIR": '.',
+			};
+			var filesFound = ['default', 'development', 'test', 'production', 'local'];
+
+			var res = utils.strictModeCheck(env, filesFound);
+			assert.ok(res);
+		});
+		it('NODE_ENV is production and file exists', function(){
+			var env = {
+				"NODE_CONFIG_STRICT_MODE": 1,
+				"NODE_ENV": "production",
+				"NODE_CONFIG_DIR": '.',
+			};
+			var filesFound = ['default', 'development', 'test', 'production', 'local'];
+
+			var res = utils.strictModeCheck(env, filesFound);
+			assert.ok(res);
+		});
+		it('NODE_ENV is production and file not exists', function(){
+			var env = {
+				"NODE_CONFIG_STRICT_MODE": 1,
+				"NODE_ENV": "production",
+				"NODE_CONFIG_DIR": '.',
+			};
+			var filesFound = ['default', 'development', 'test', 'preproduction', 'local'];
+
+			var res = utils.strictModeCheck(env, filesFound);
+			assert.ok(!res);
+		});
+		it('NODE_ENV is production, NODE_APP_INSTANCE is 2 and file exists', function(){
+			var env = {
+				"NODE_CONFIG_STRICT_MODE": 1,
+				"NODE_ENV": "production",
+				"NODE_APP_INSTANCE": 2,
+				"NODE_CONFIG_DIR": '.',
+			};
+			var filesFound = ['default', 'development', 'test', 'production-2', 'local'];
+
+			var res = utils.strictModeCheck(env, filesFound);
+			assert.ok(res);
+		});
+		it('NODE_ENV is production, NODE_APP_INSTANCE is 2 and file not exists', function(){
+			var env = {
+				"NODE_CONFIG_STRICT_MODE": 1,
+				"NODE_ENV": "production",
+				"NODE_APP_INSTANCE": 2,
+				"NODE_CONFIG_DIR": '.',
+			};
+			var filesFound = ['default', 'development', 'test', 'production-1', 'local'];
+
+			var res = utils.strictModeCheck(env, filesFound);
+			assert.ok(!res);
+		});
+		it('NODE_ENV is production, NODE_APP_INSTANCE is 2, HOSTNAME is server and file exists', function(){
+			var env = {
+				"NODE_CONFIG_STRICT_MODE": "HOSTNAME",
+				"NODE_ENV": "production",
+				"HOSTNAME": "server",
+				"NODE_APP_INSTANCE": 2,
+				"NODE_CONFIG_DIR": '.',
+			};
+			var filesFound = ['default', 'server-production-2'];
+
+			var res = utils.strictModeCheck(env, filesFound);
+			assert.ok(res);
+		});
+		it('NODE_ENV is production, NODE_APP_INSTANCE is 2, HOSTNAME is server and file not exists', function(){
+			var env = {
+				"NODE_CONFIG_STRICT_MODE": "HOSTNAME",
+				"NODE_ENV": "production",
+				"HOSTNAME": "server",
+				"NODE_APP_INSTANCE": 2,
+				"NODE_CONFIG_DIR": '.',
+			};
+			var filesFound = ['default', 'myserver-production-2'];
+
+			var res = utils.strictModeCheck(env, filesFound);
+			assert.ok(!res);
 		});
 	});
 

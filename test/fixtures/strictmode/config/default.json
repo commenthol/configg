@@ -1,0 +1,6 @@
+{
+  "config": {
+    "config": true,
+    "./config": true
+  }
+}

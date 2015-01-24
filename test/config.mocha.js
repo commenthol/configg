@@ -8,6 +8,7 @@
 /* global describe, it, beforeEach */
 
 var fs = require('fs');
+var _ = require('lodash');
 var assert = require('assert');
 var Config = require('../lib/config');
 var hashtree = require('hashtree').hashTree;
@@ -18,7 +19,6 @@ function log(obj, other) {
 	console.log(JSON.stringify(obj, null, '\t'));
 	if (other) {
 		console.log(hashtree.diff(obj,other));
-		//~ console.log(hashtree.diff(Object.getOwnPropertyNames(obj),Object.getOwnPropertyNames(other)));
 	}
 }
 
@@ -418,7 +418,7 @@ describe('#config', function(){
 				}
 			};
 			// both configs are different objects
-			assert.ok(configA !== configB)
+			assert.ok(configA !== configB);
 			// but contain the same values
 			deepEqual(configA, configB);
 			// configs are isolated
@@ -616,4 +616,94 @@ describe('#config', function(){
 			deepEqual(config, exp);
 		});
 	});
+
+	describe('strict mode', function() {
+
+		it('good case', function(){
+			var dir = __dirname + '/fixtures/strictmode';
+			_.merge(process.env, {
+					NODE_CONFIG_STRICT_MODE: 'Y',
+					NODE_CONFIG_DIR: dir + '/configdir',
+					NODE_ENV: 'production',
+				});
+			var cconfig = new Config();
+			var config = cconfig.dir(dir);
+			var exp = {
+					config: {
+						config: true,
+						'./config': true,
+						'./configdir': true,
+						'default': true,
+						production: true
+					},
+					common: {
+						NODE_ENV: 'production',
+						NODE_APP_INSTANCE: undefined,
+						HOSTNAME: 'server'
+					}
+				};
+			assert.deepEqual(config, exp);
+		});
+		it('failure NODE_ENV=test', function(){
+			var err;
+			var dir = __dirname + '/fixtures/strictmode';
+			_.merge(process.env, {
+					NODE_CONFIG_STRICT_MODE: 'Y',
+					NODE_CONFIG_DIR: dir + '/configdir',
+					NODE_ENV: 'test',
+				});
+			try {
+				new Config();
+			} catch (e) {
+				err = e;
+			}
+			assert.equal(err.message, 'strict mode failed!');
+		});
+		it('good case NODE_APP_INSTANCE', function(){
+			var dir = __dirname + '/fixtures/strictmode';
+			_.merge(process.env, {
+					NODE_CONFIG_STRICT_MODE: 'Y',
+					NODE_APP_INSTANCE: 2,
+					NODE_CONFIG_DIR: dir + '/configdir',
+					NODE_ENV: 'production',
+				});
+			var cconfig = new Config();
+			var config = cconfig.dir(dir);
+			var exp = {
+				"config": {
+					"config": true,
+					"./config": true,
+					"./configdir": true,
+					"default": true,
+					"production": true,
+					"instance": 2,
+				},
+				"common": {
+					"NODE_ENV": "production",
+					"NODE_APP_INSTANCE": "2",
+					"HOSTNAME": "server"
+				}
+			};
+			assert.deepEqual(config, exp);
+		});
+		it('failure NODE_APP_INSTANCE', function(){
+			var err;
+			var dir = __dirname + '/fixtures/strictmode';
+			_.merge(process.env, {
+					NODE_CONFIG_STRICT_MODE: 'Y',
+					NODE_APP_INSTANCE: 1,
+					NODE_CONFIG_DIR: dir + '/configdir',
+					NODE_ENV: 'production',
+				});
+			try {
+				new Config();
+			} catch (e) {
+				err = e;
+			}
+			assert.equal(err.message, 'strict mode failed!');
+		});
+
+
+	});
+
 });

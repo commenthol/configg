@@ -13,6 +13,28 @@ var Config = require('./lib/config');
 var globalConfig = new Config();
 
 /**
+ * Print config informartion to console if
+ * `NODE_DEBUG=config` is set
+ *
+ * @param {String} dir - dirname of module config
+ * @param {Object} conf - the config object
+ */
+function debugConfig (dir, conf) {
+	var obj;
+	if (/\bconfig\b/.test(process.env.NODE_DEBUG)) {
+		obj = { message: 'DEBUG configg', dir: dir, config: conf };
+		console.log(JSON.stringify(obj,
+			function (key, value) {
+				if (typeof value === 'function') {
+					return value.toString();
+				}
+				return value;
+			}, 2)
+		);
+	}
+}
+
+/**
  * read configuration from `dir` and merge
  * @export
  * @param {Path} dirname - directory to read config from
@@ -20,7 +42,9 @@ var globalConfig = new Config();
  * @return {Object} configuration object
  */
 var M = function(dir) {
-	return globalConfig.dir(dir);
+	var conf = globalConfig.dir(dir);
+	debugConfig(dir, conf);
+	return conf;
 };
 
 /// append the Config class

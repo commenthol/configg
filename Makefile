@@ -1,16 +1,28 @@
-all: v0.8 v0.10 v0.11
+engines = 0.8 0.10 0.11
+docs = README.md doc/documentation.md
 
-v0.8:
-	n 0.8 && npm test
+all: engines
 
-v0.10:
-	n 0.10 && npm test
+engines: $(engines)
 
-v0.11:
-	n 0.11 && npm test
+$(engines):
+	@ n $@
+	@ $(MAKE) test
 
-_readme:
-	@ markedpp README.md > o.md; \
-	mv o.md README.md;
-	@ markedpp doc/documentation.md > o.md; \
-	mv o.md doc/documentation.md;
+test: mocha
+
+mocha:
+	@ mocha test/*.mocha.js
+
+doc: $(docs)
+
+$(docs):
+	@ echo $@
+	@ markedpp $@ > o.md && \
+	mv o.md $@;
+
+.PHONY: all \
+	engines $(engines) \
+	test \
+	mocha \
+	doc $(docs)

@@ -40,6 +40,7 @@ Credits and Acknoledgement go to [node-config][] for inspiration.
   * [NODE_APP_INSTANCE](#node_app_instance)
   * [NODE_CONFIG](#node_config)
   * [SUPPRESS_NO_CONFIG_WARNING](#suppress_no_config_warning)
+  * [NODE_DEBUG=config](#node_debug-config)
   * [NODE_CONFIG_STRICT_MODE](#node_config_strict_mode)
 * [Overwriting](#overwriting)
 * [Configuration files](#configuration-files)
@@ -127,11 +128,10 @@ string from its `package.json` file. (E.g. "my-test@0.1.0").
 
 ## Environment Variables
 
-"configg" uses some environment variable to control its behaviour. It
-can also use custom environment variables to override your app's
-configuration. In both cases, these are generally exported in your
-shell before loading the app, but can also be supplied on the command
-line or in your app bootstrap.
+"configg" uses some environment variable to control its behaviour. In
+both cases, these are generally exported in your shell before loading
+the app, but can also be supplied on the command line or in your app
+bootstrap.
 
 Example exporting to the OS before loading your app:
 
@@ -242,23 +242,78 @@ The current value of `NODE_CONFIG` is not available through
 
 ### SUPPRESS_NO_CONFIG_WARNING
 
-Surrpresses the Warning if no configuration dir as given by
-`NODE_CONFIG_DIR` is found.
+Suppresses the warning, if no configuration dir as given by
+`NODE_CONFIG_DIR`, is found. Has no effect in `NODE_CONFIG_STRICT_MODE`.
+
+### NODE_DEBUG=config
+
+If `NODE_DEBUG=config` is set then each time "configg" is required the
+returned config object will be printed to console.
+
+This env-settings allows you to quickly check which config gets loaded
+for each module.
 
 ### NODE_CONFIG_STRICT_MODE
 
-TODO
+When strict mode is enabled (`NODE_CONFIG_STRICT_MODE=Y`), the
+following conditions must be true or an exception will thrown at
+require:
+
+* The `NODE_CONFIG_DIR` must be explicitely set.
+
+* If `NODE_ENV` is set, there must be an explicit config file matching
+    `NODE_ENV`.
+
+* If `NODE_APP_INSTANCE` is set, there must be an explicit config file
+    matching `NODE_APP_INSTANCE`.
+
+* If `NODE_CONFIG_STRICT_MODE=HOSTNAME` is set, there must be an
+    explicit config file matching `HOSTNAME`
+
+`NODE_ENV` must not match 'default' or 'local' to avoid ambiguity.
+
+Strict mode is off by default.
 
 ## Overwriting
 
-TODO
+A configuration for an app or module is primarily bound to its
+`./config` directory and then on the folder specified via
+`NODE_CONFIG_DIR` (or implicitely via `process.cwd + '/config'`).
 
+For each module/app at first the `./config` folder next the
+`package.json` file gets loaded (basic) which at second get overwritten by the
+files loaded from the folder given in `NODE_CONFIG_DIR` (extended).
+
+**Example**
+
+Given a sample project with one module:
+
+    ├── index.js
+    ├── package.json        (name=myapp)
+    ├── configdir/          (extended) for myapp and mymodule
+    ├── config/             (basic) for myapp
+    └─┬ node_modules
+      └─┬ mymodule
+        ├── package.json    (name=mymodule)
+        ├── config/         (basic) for mymodule
+
+Running `node index.js --NODE_CONFIG_DIR=./configdir` first loads the
+config files from `configdir`. Then the config for "myapp" would get
+loaded from `config`. For `myapp` now `config` gets overwritten by
+`configdir`.
+
+For `mymodule` the files in folder `node_modules/mymodule/config` get
+overwritten by `configdir`.
+
+This means that independently of the depth of the "node_modules" depth
+a "basic" config of a module can only get overwritten by the "extended"
+one specified in `NODE_CONFIG_DIR`.
 
 ## Configuration files
 
-All configuration files need to be stored in the `config/` folder which
-needs to be in the same folder as the `package.json` of your module or
-project.
+All basic configuration files need to be stored in the `config/` folder
+which needs to be in the same folder as the `package.json` of your
+module or project.
 
     ├── package.json
     └─┬ config/
@@ -287,6 +342,9 @@ in.
 They may also exist a "common" property for properties you like to share
 alongside all your modules of your App.
 
+`NODE_ENV`, `HOSTNAME` and `NODE_APP_INSTANCE` are set per default from
+the environment vars or process arguments.
+
 **Extended Structure for an App**
 
 Needs to be set with `NODE_CONFIG_DIR` or `NODE_CONFIG`:
@@ -310,6 +368,10 @@ Needs to be set with `NODE_CONFIG_DIR` or `NODE_CONFIG`:
   }
 }
 ````
+
+The extended format should not contain a "config" property. Instead the
+module/app name from the `package.json` file needs to be used. This
+then guarantees an isolated overwrite for that specific module or app.
 
 Various file formats are supported. Please check [Extension
 loading](Extension_loading).
@@ -510,4 +572,5 @@ all modules from each other.
 
 [The Twelve-Factor App]: http://12factor.net
 [node-config]: https://github.com/lorenwest/node-config
+
 
