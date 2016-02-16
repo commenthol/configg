@@ -1,7 +1,7 @@
 {
   "name": "configg",
   "description": "A node configuration manager",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "main": "index.js",
   "engines": {
     "node": ">=0.8.0"
@@ -13,6 +13,7 @@
   "dependencies": {
     "coffee-script": "^1.10.0",
     "cson": "^3.0.2",
+    "debug": "^2.2.0",
     "hashtree": "^0.7.0",
     "hjson": "^1.7.6",
     "js-yaml": "^3.5.3",

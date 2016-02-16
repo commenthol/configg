@@ -7,6 +7,7 @@
 'use strict'
 
 // module dependencies
+var log = require('debug')
 var Config = require('./lib/config')
 
 // the global config object
@@ -20,21 +21,13 @@ var globalConfig = new Config()
  * @param {Object} conf - the config object
  */
 function debugConfig (dir, conf) {
-  var obj
-  if (/\bconfig\b/.test(process.env.NODE_DEBUG)) {
-    obj = {
-      message: 'DEBUG configg',
-      dir: dir,
-      config: conf
-    }
-    console.log(JSON.stringify(obj,
-      function (key, value) {
-        if (typeof value === 'function') {
-          return value.toString()
-        }
-        return value
-      }, 2))
-  }
+  log('configg:' + dir)('%s', JSON.stringify(conf,
+    function (key, value) {
+      if (typeof value === 'function') {
+        return value.toString()
+      }
+      return value
+    }, 2))
 }
 
 /**

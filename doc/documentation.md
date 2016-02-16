@@ -39,8 +39,7 @@ Credits and Acknoledgement go to [node-config][] for inspiration.
   * [HOSTNAME](#hostname)
   * [NODE_APP_INSTANCE](#node_app_instance)
   * [NODE_CONFIG](#node_config)
-  * [SUPPRESS_NO_CONFIG_WARNING](#suppress_no_config_warning)
-  * [NODE_DEBUG=config](#node_debug-config)
+  * [DEBUG=configg:*](#debug-configg-)
   * [NODE_CONFIG_STRICT_MODE](#node_config_strict_mode)
 * [Overwriting](#overwriting)
 * [Configuration files](#configuration-files)
@@ -60,11 +59,32 @@ Credits and Acknoledgement go to [node-config][] for inspiration.
 Every App or Module you like to enable with "configg" requires it as
 dependency. Install with `npm` and save it into your `package.json`.
 
-```
+```bash
 $ npm install --save configg
 $ mkdir config
 $ vi config/default.js
 ```
+_config/default.js_
+```js
+module.exports = {
+  config: { /* your config goes in here */ }
+}
+```
+For a _configg_ enabled module please change `package.json` that way, that _configg_ appears as _peerDependency_.
+Unfortunately this cannot be done via npm at the moment.
+
+_package.json_
+```json
+{
+  "name": "my-configg-enabled-module"
+  ...
+  "peerDependencies": {
+    "configg: "^1.0.0"
+  }
+  ...
+}
+```
+
 
 ## Common Usage
 
@@ -158,16 +178,18 @@ var config = require('configg')(__dirname);
 This contains the path to the directory containing your
 App-Configuration files.
 
-If environment variable or command line argument is not present the
+If the environment variable or command line argument is not present the
 configuration points to the "config" folder of the current working dir
 (`process.cwd() + '/config'`).
 
 If the path is relative (starts with a './' or '../') then the current
 working directory is used (determinated by `process.cwd()`)
 
-The current value of `NODE_CONFIG_DIR` is not available through
+_This is disabled in v1.0.0 as this might cause problems when not installed using peerDependencies_  
+~~The current value of `NODE_CONFIG_DIR` is not available through
 `config.common`. The setting is being deleted from `process.env` and
-`process.argv` for security reasons.
+`process.argv` for security reasons.~~
+
 
 ### NODE_ENV
 
@@ -240,15 +262,10 @@ The current value of `NODE_CONFIG` is not available through
 `config.common`. The setting is being deleted from `process.env` and
 `process.argv` for security reasons.
 
-### SUPPRESS_NO_CONFIG_WARNING
+### DEBUG=configg:*
 
-Suppresses the warning, if no configuration dir as given by
-`NODE_CONFIG_DIR`, is found. Has no effect in `NODE_CONFIG_STRICT_MODE`.
-
-### NODE_DEBUG=config
-
-If `NODE_DEBUG=config` is set then each time "configg" is required the
-returned config object will be printed to console.
+If `DEBUG=configg:*` is set then each time "configg" is required the
+returned config object will be printed to console using [debug][].
 
 This env-settings allows you to quickly check which config gets loaded
 for each module.
@@ -549,6 +566,7 @@ all modules from each other.
 <!-- !ref -->
 
 * [CSON][CSON]
+* [debug][debug]
 * [Hjson - the Human JSON][Hjson]
 * [JSON - JavaScript Object Notation][JSON]
 * [json5 - JSON for the ES5 era][json5]
@@ -570,7 +588,7 @@ all modules from each other.
 [CSON]: https://www.npmjs.com/package/cson
 [Properties]: http://docs.oracle.com/javase/7/docs/api/java/util/Properties.html#load
 
+[debug]: https://github.com/visionmedia/debug
+
 [The Twelve-Factor App]: http://12factor.net
 [node-config]: https://github.com/lorenwest/node-config
-
-
