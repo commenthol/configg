@@ -14,7 +14,7 @@ port = 1529
 url = "http://foo.bar/"
 
 # module specifics for a special version of module "test"
-[test@0.1.0]
+["test@0.1.0"]
 cors = false
 
 # common settings available to all modules

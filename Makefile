@@ -1,4 +1,4 @@
-engines = 0.8 0.10 0.11
+engines = 0.12 4.3 5.6
 docs = README.md doc/documentation.md
 
 all: engines
@@ -18,8 +18,7 @@ doc: $(docs)
 
 $(docs):
 	@ echo $@
-	@ markedpp $@ > o.md && \
-	mv o.md $@;
+	@ markedpp -i $@ -o $@
 
 .PHONY: all \
 	engines $(engines) \

@@ -1,4 +1,4 @@
 /* ./index.js */
-var config = require('configg')(__dirname);
+var config = require('configg')(__dirname)
 
-console.log(config.get('config.backend'));
+console.log(config.get('config.backend'))

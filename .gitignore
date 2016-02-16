@@ -1,6 +1,7 @@
 /node_modules
 /coverage
-/jsdoc
+/docs
 /tmp
 *.log
 *.tgz
+.eslintcache

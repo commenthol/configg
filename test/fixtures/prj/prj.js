@@ -1,20 +1,20 @@
-'use strict';
+'use strict'
 
-var config = require('configg')(__dirname);
+var config = require('configg')(__dirname)
 
-var moduleA = require('module-a');
-var moduleB = require('module-b');
+var moduleA = require('module-a')
+var moduleB = require('module-b')
 
-var M = function(){
-	return {
-		prj: config,
-		a: moduleA(),
-		b: moduleB(),
-	};
+var M = function () {
+  return {
+    prj: config,
+    a: moduleA(),
+    b: moduleB()
+  }
 }
 
-module.exports = M;
+module.exports = M
 
 if (module === require.main) {
-	console.log(JSON.stringify(M(), null, 2));
+  console.log(JSON.stringify(M(), null, 2))
 }

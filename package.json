@@ -1,7 +1,7 @@
 {
   "name": "configg",
   "description": "A node configuration manager",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "index.js",
   "engines": {
     "node": ">=0.8.0"
@@ -11,24 +11,28 @@
     "doc": "doc"
   },
   "dependencies": {
-    "coffee-script": "^1.8.0",
-    "cson": "^1.6.2",
-    "hashtree": "^0.6.2",
-    "hjson": "^1.4.0",
-    "js-yaml": "^3.2.5",
+    "coffee-script": "^1.10.0",
+    "cson": "^3.0.2",
+    "hashtree": "^0.7.0",
+    "hjson": "^1.7.6",
+    "js-yaml": "^3.5.3",
     "json5": "^0.4.0",
-    "lodash": "^2.4.1",
+    "lodash": "^4.4.0",
     "properties": "^1.2.1",
-    "toml": "^2.1.1"
+    "toml": "^2.3.0"
   },
   "devDependencies": {
-    "mocha": "latest"
+    "eslint": "^2.1.0",
+    "eslint-config-standard": "^5.1.0",
+    "eslint-plugin-promise": "^1.0.8",
+    "eslint-plugin-standard": "^1.3.2",
+    "mocha": "^2.4.5"
   },
   "scripts": {
-    "test": "mocha test/*.mocha.js",
+    "test": "npm run lint; mocha test/*.mocha.js",
     "cover": "istanbul cover _mocha --report lcov --report text -- -R dot --check-leaks test/*.mocha.js",
-    "lint": "jshint --show-non-errors *.js */*.js",
-    "doc": "jsdoc -d jsdoc -c jsdoc.json index.js lib/*.js",
+    "lint": "eslint --quiet --cache '**/*.js'",
+    "doc": "jsdox -o docs index.js lib/*.js",
     "clean": "rm -rf jsdoc coverage"
   },
   "repository": {
@@ -50,5 +54,11 @@
   "bugs": {
     "url": "https://github.com/commenthol/configg/issues"
   },
-  "homepage": "https://github.com/commenthol/configg"
+  "homepage": "https://github.com/commenthol/configg",
+  "eslintConfig": {
+    "extends": "standard",
+    "plugins": [
+      "standard"
+    ]
+  }
 }

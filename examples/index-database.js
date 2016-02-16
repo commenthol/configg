@@ -1,7 +1,7 @@
 /* ./index-database.js */
-var config = require('configg')(__dirname);
+var config = require('configg')(__dirname)
 
-var database = require('my-database');
+var database = require('my-database') // eslint-disable-line
 
-console.log('---- Application ----');
-console.log(config.get('config.backend'));
+console.log('---- Application ----')
+console.log(config.get('config.backend'))

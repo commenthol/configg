@@ -4,13 +4,13 @@
  * @license MIT
  */
 
-'use strict';
+'use strict'
 
-/// module dependencies
-var Config = require('./lib/config');
+// module dependencies
+var Config = require('./lib/config')
 
-/// the global config object
-var globalConfig = new Config();
+// the global config object
+var globalConfig = new Config()
 
 /**
  * Print config informartion to console if
@@ -20,18 +20,21 @@ var globalConfig = new Config();
  * @param {Object} conf - the config object
  */
 function debugConfig (dir, conf) {
-	var obj;
-	if (/\bconfig\b/.test(process.env.NODE_DEBUG)) {
-		obj = { message: 'DEBUG configg', dir: dir, config: conf };
-		console.log(JSON.stringify(obj,
-			function (key, value) {
-				if (typeof value === 'function') {
-					return value.toString();
-				}
-				return value;
-			}, 2)
-		);
-	}
+  var obj
+  if (/\bconfig\b/.test(process.env.NODE_DEBUG)) {
+    obj = {
+      message: 'DEBUG configg',
+      dir: dir,
+      config: conf
+    }
+    console.log(JSON.stringify(obj,
+      function (key, value) {
+        if (typeof value === 'function') {
+          return value.toString()
+        }
+        return value
+      }, 2))
+  }
 }
 
 /**
@@ -41,14 +44,13 @@ function debugConfig (dir, conf) {
  * @throws {Error}
  * @return {Object} configuration object
  */
-var M = function(dir) {
-	var conf = globalConfig.dir(dir);
-	debugConfig(dir, conf);
-	return conf;
-};
+var M = function (dir) {
+  var conf = globalConfig.dir(dir)
+  debugConfig(dir, conf)
+  return conf
+}
 
-/// append the Config class
-M.Config = Config;
+// append the Config class
+M.Config = Config
 
-module.exports = M;
-
+module.exports = M
