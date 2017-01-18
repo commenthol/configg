@@ -1,4 +1,4 @@
-engines = 0.12 4.3 5.6
+engines = 0.8 0.12 4. 6. 7.
 docs = README.md doc/documentation.md
 
 all: engines
@@ -9,10 +9,8 @@ $(engines):
 	@ n $@
 	@ $(MAKE) test
 
-test: mocha
-
-mocha:
-	@ mocha test/*.mocha.js
+test:
+	@ npm test
 
 doc: $(docs)
 

@@ -452,6 +452,7 @@ describe('#config', function () {
           'value': 'test',
           'local': 3,
           'NODE_ENV': 'development',
+          'NODE_APP_INSTANCE': undefined,
           'HOSTNAME': 'server'
         }
       }
@@ -637,6 +638,7 @@ describe('#config', function () {
         },
         common: {
           NODE_ENV: 'production',
+          NODE_APP_INSTANCE: undefined,
           HOSTNAME: 'server'
         }
       }

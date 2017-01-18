@@ -4,7 +4,8 @@ language: node_js
 
 node_js:
   - 0.12
-  - 4.3
+  - 4.
+  - 6.
   - node
 
 #before_install:
