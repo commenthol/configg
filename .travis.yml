@@ -3,9 +3,8 @@ sudo: false
 language: node_js
 
 node_js:
-  - 0.12
-  - 4.
-  - 6.
+  - 4.7
+  - 6.9
   - node
 
 #before_install:

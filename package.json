@@ -30,7 +30,7 @@
     "mocha": "^3.2.0"
   },
   "scripts": {
-    "prepublish": "npm run lint && npm test",
+    "__prepublish": "npm run lint && npm test",
     "test": "mocha test/*.mocha.js",
     "cover": "istanbul cover _mocha --report lcov --report text -- -R dot --check-leaks test/*.mocha.js",
     "lint": "eslint --quiet --cache '**/*.js'",
