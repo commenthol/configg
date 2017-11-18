@@ -418,11 +418,11 @@ describe('#config', function () {
           'NODE_APP_INSTANCE': undefined
         }
       }
-        // both configs are different objects
+      // both configs are different objects
       assert.ok(configA !== configB)
-        // but contain the same values
+      // but contain the same values
       deepEqual(configA, configB)
-        // configs are isolated
+      // configs are isolated
       delete configA.config
       deepEqual(configB, exp)
     })
@@ -596,9 +596,9 @@ describe('#config', function () {
     it('for module test in app context of myapp', function () {
       process.env.NODE_CONFIG_DIR = path.join(__dirname, 'fixtures/myapp/config')
       var cconfig = new Config()
-        // first "require" from myapp
+      // first "require" from myapp
       cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
-        // second "require" from module "test"
+      // second "require" from module "test"
       var config = cconfig.dir(path.join(__dirname, 'fixtures/test'))
       var exp = {
         'config': {

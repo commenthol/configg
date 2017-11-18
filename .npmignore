@@ -1,5 +1,6 @@
 /node_modules
 /coverage
+/config
 /docs
 /test
 /tmp
@@ -8,3 +9,4 @@
 *.tgz
 Makefile
 TODO.md
+yarn.lock

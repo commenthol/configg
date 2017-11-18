@@ -341,4 +341,19 @@ describe('#utils', function () {
       assert.ok(!res)
     })
   })
+
+  describe('#filename', function () {
+    it('should extract filename from *Nix path', function () {
+      const err = {}
+      err.stack = 'Error\n    at Object.<anonymous> (/home/user/test/test.js:1:90)\n    at Module._compile (module.js:635:30)\n    '
+      var filename = utils._filenameFromError(err)
+      assert.equal(filename, '/home/user/test/test.js')
+    })
+    it('should extract filename from M$ path', function () {
+      const err = {}
+      err.stack = 'Error\n    at Object.<anonymous> (C:\\Users\\IEUser\\test\\test.js:4:13)\n    at Module._compile (module.js:635:30)\n    '
+      var filename = utils._filenameFromError(err)
+      assert.equal(filename, 'C:\\Users\\IEUser\\test\\test.js')
+    })
+  })
 })

@@ -7,28 +7,10 @@
 'use strict'
 
 // module dependencies
-var log = require('debug')
 var Config = require('./lib/config')
 
 // the global config object
 var globalConfig = new Config()
-
-/**
- * Print config informartion to console if
- * `NODE_DEBUG=config` is set
- *
- * @param {String} dir - dirname of module config
- * @param {Object} conf - the config object
- */
-function debugConfig (dir, conf) {
-  log('configg:' + dir)('%s', JSON.stringify(conf,
-    function (key, value) {
-      if (typeof value === 'function') {
-        return value.toString()
-      }
-      return value
-    }, 2))
-}
 
 /**
  * read configuration from `dir` and merge
@@ -39,7 +21,6 @@ function debugConfig (dir, conf) {
  */
 var M = function (dir) {
   var conf = globalConfig.dir(dir)
-  debugConfig(dir, conf)
   return conf
 }
 

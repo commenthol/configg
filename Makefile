@@ -1,4 +1,4 @@
-engines = 0.8 0.12 4. 6. 7.
+engines = 4. 6. 8. 9.
 docs = README.md doc/documentation.md
 
 all: engines

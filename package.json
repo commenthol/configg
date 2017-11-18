@@ -1,21 +1,56 @@
 {
   "name": "configg",
+  "version": "1.1.0-0",
   "description": "A node configuration manager",
-  "version": "1.0.1",
-  "main": "index.js",
-  "engines": {
-    "node": ">=0.8.0"
+  "keywords": [
+    "conf",
+    "config",
+    "config-node",
+    "configuration",
+    "env",
+    "environment",
+    "node-config"
+  ],
+  "homepage": "https://github.com/commenthol/configg",
+  "bugs": {
+    "url": "https://github.com/commenthol/configg/issues"
   },
+  "license": "MIT",
+  "author": "commenthol <commenthol@gmail.com>",
+  "main": "index.js",
   "directories": {
-    "test": "test",
-    "doc": "doc"
+    "doc": "doc",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/commenthol/configg"
+  },
+  "scripts": {
+    "__prepublish": "npm run lint && npm test",
+    "clean": "rm -rf jsdoc coverage",
+    "cover": "istanbul cover _mocha --report lcov --report text -- -R dot --check-leaks test/*.mocha.js",
+    "doc": "jsdox -o docs index.js lib/*.js",
+    "lint": "eslint --quiet --cache '**/*.js'",
+    "test": "mocha"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "mocha": true
+    },
+    "extends": "standard",
+    "plugins": [
+      "standard"
+    ]
   },
   "dependencies": {
     "coffee-script": "^1.12.2",
     "cson": "^4.0.0",
-    "debug": "^2.6.0",
+    "debug": "^3.1.0",
+    "find-root": "^1.1.0",
     "hashtree": "^0.7.0",
-    "hjson": "^2.4.1",
+    "hjson": "^3.1.0",
     "js-yaml": "^3.7.0",
     "json5": "^0.5.1",
     "lodash": "^4.17.4",
@@ -23,44 +58,16 @@
     "toml": "^2.3.1"
   },
   "devDependencies": {
-    "eslint": "^3.13.1",
-    "eslint-config-standard": "^6.2.1",
-    "eslint-plugin-promise": "^3.4.0",
-    "eslint-plugin-standard": "^2.0.1",
-    "mocha": "^3.2.0"
+    "eslint": "^4.11.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^3.5.3"
   },
-  "scripts": {
-    "__prepublish": "npm run lint && npm test",
-    "test": "mocha test/*.mocha.js",
-    "cover": "istanbul cover _mocha --report lcov --report text -- -R dot --check-leaks test/*.mocha.js",
-    "lint": "eslint --quiet --cache '**/*.js'",
-    "doc": "jsdox -o docs index.js lib/*.js",
-    "clean": "rm -rf jsdoc coverage"
+  "engines": {
+    "node": ">=0.8.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "github.com/commenthol/configg"
-  },
-  "keywords": [
-    "conf",
-    "config",
-    "configuration",
-    "node-config",
-    "config-node",
-    "env",
-    "environment"
-  ],
-  "author": "commenthol <commenthol@gmail.com>",
-  "maintainers": "commenthol <commenthol@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/commenthol/configg/issues"
-  },
-  "homepage": "https://github.com/commenthol/configg",
-  "eslintConfig": {
-    "extends": "standard",
-    "plugins": [
-      "standard"
-    ]
-  }
+  "maintainers": "commenthol <commenthol@gmail.com>"
 }

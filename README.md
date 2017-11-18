@@ -55,6 +55,7 @@ $ mkdir config
 ```
 
 **Define default values for your App**
+
 ```js
 /* ./config/default.hjson */
 {
@@ -70,6 +71,7 @@ $ mkdir config
 ```
 
 **Define production overrides**
+
 ```js
 /* ./config/production.hjson */
 {
@@ -86,10 +88,8 @@ $ mkdir config
 
 ```js
 /* ./index.js */
-var config = require('configg')(__dirname);
-// `__dirname` needs to point to the directory of your Apps package.json
-
-console.log(config.get('config.backend'));
+var config = require('configg')()
+console.log(config.get('config.backend'))
 ```
 
 Running on development:
@@ -115,7 +115,7 @@ using a "my-database" module.
 In development you'd like to use the [default settings](./examples/node_modules/my-database/config/default.js)
 provided within "my-database" but change the host and credentials.
 
-Note: This module uses a "JS" file for the config.
+> Note: This module uses a "JS" file for the config.
 
 ```js
 /* /node_modules/my-database/config/default.js */
@@ -131,30 +131,30 @@ module.exports = {
   common: {
     pool: false
   }
-};
+}
 ```
 
 **Our sample database module**
 
 ```js
 /* database.js */
-var config = require('configg')(__dirname); //< do not use `true` here, as this
-                                            //<  config is "Module-Only"
-console.log('---- Module "my-database" ----');
-console.log(config.get('config'));
+var config = require('configg')()
 
-module.exports = {};
+console.log('---- Module "my-database" ----')
+console.log(config.get('config'))
+
+module.exports = {}
 ```
 
 **Application with module "my-database"**
 
 ```js
 /* ./index-database.js */
-var config = require('configg')(__dirname);
-var database = require('my-database');
+var config = require('configg')()
+var database = require('my-database')
 
-console.log('---- Application ----');
-console.log(config.get('config.backend'));
+console.log('---- Application ----')
+console.log(config.get('config.backend'))
 ```
 
 **Running the App in development:**
@@ -219,7 +219,7 @@ with the source of its origin and licence.
 
 ## License
 
-Copyright (c) 2016 commenthol (MIT License)
+Copyright (c) 2016-present commenthol (MIT License)
 
 See [LICENSE][] for more info.
 
@@ -227,14 +227,3 @@ See [LICENSE][] for more info.
 [The Twelve-Factor App]: https://12factor.net
 [Hjson]: https://laktak.github.io/hjson/
 [node-config]: https://github.com/lorenwest/node-config
-
-
-
-
-
-
-
-
-
-
-

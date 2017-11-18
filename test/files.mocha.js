@@ -31,7 +31,7 @@ describe('#File', function () {
     })
     it('get right order of extensions', function () {
       var file = new File()
-      assert.deepEqual(file.extNames(), ['.js', '.json', '.json5', '.hjson', '.toml', '.coffee', '.yaml', '.yml', /* ".cson", */'.properties'])
+      assert.deepEqual(file.extNames(), ['.js', '.json', '.json5', '.hjson', '.toml', '.coffee', '.yaml', '.yml', '.cson', '.properties'])
     })
   })
 
@@ -64,10 +64,10 @@ describe('#File', function () {
       var file = new File(confDir + 'default.coffee')
       assertObj(file)
     })
-    // ~ it('cson file', function(){ // note: testcase fails on node v0.11.x
-    // ~ var file = new File(confDir + 'default.cson');
-    // ~ assertObj(file);
-    // ~ });
+    it('cson file', function () {
+      var file = new File(confDir + 'default.cson')
+      assertObj(file)
+    })
     it('js file', function () {
       var file = new File(confDir + 'default.js')
       assertObj(file)

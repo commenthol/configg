@@ -39,7 +39,7 @@ Credits and Acknoledgement go to [node-config][] for inspiration.
   * [HOSTNAME](#hostname)
   * [NODE_APP_INSTANCE](#node_app_instance)
   * [NODE_CONFIG](#node_config)
-  * [DEBUG=configg:*](#debug-configg-)
+  * [DEBUG=configg](#debug-configg)
   * [NODE_CONFIG_STRICT_MODE](#node_config_strict_mode)
 * [Overwriting](#overwriting)
 * [Configuration files](#configuration-files)
@@ -65,42 +65,50 @@ $ mkdir config
 $ vi config/default.js
 ```
 _config/default.js_
+
 ```js
 module.exports = {
   config: { /* your config goes in here */ }
 }
 ```
 For a _configg_ enabled module please change `package.json` that way, that _configg_ appears as _peerDependency_.
-Unfortunately this cannot be done via npm at the moment.
+Unfortunately this cannot be done via `npm` at the moment.
+Alternatively use
 
-_package.json_
-```json
-{
-  "name": "my-configg-enabled-module"
-  ...
-  "peerDependencies": {
-    "configg: "^1.0.0"
-  }
-  ...
-}
+```
+yarn add -P configg
 ```
 
+_package.json_
+
+```json
+{
+  "name": "my-configg-enabled-module",
+  ...
+  "peerDependencies": {
+    "configg": "^1.0.0"
+  }
+}
+```
 
 ## Common Usage
 
 **For modules:**
 
 ```js
-var config = require('configg')(__dirname);
-var value = config.get('config.key.subkey');
+var config = require('configg')()
+// or explicitely naming the package root dir where `package.json` is located
+var config = require('configg')(path.resolve(__dirname, '..'))
+// obtain a value from the configuration
+var value = config.get('config.key.subkey')
 ```
 
-`__dirname` needs to point to the directory where the `package.json`
+`__dirname` may point to the directory where the `package.json`
 file is located together with a `config/` folder.
 
 `value` can be read from a config like that:
 
-```
+```json
 {
   "config": {
     "key": {
@@ -116,11 +124,11 @@ For overwriting the App- or Module-Config the `NODE_CONFIG_DIR` env
 variable or command line arg must be present. As primary key for
 overwriting the package name from `package.json` must be present.
 
-E.g. the name of your App in `package.json` is 'my-app'. It contans a
+E.g. the name of your App in `package.json` is 'my-app'. It contains a
 module named 'my-module' and another with a different version
 'my-module@version':
 
-```
+```json
 {
   "my-app": {
     "key": {
@@ -169,8 +177,8 @@ Example passing on as command line arguments:
 Example setting in JavaScript before the first load of "configg":
 
 ````js
-process.env.NODE_ENV = 'test';
-var config = require('configg')(__dirname);
+process.env.NODE_ENV = 'test'
+var config = require('configg')()
 ````
 
 ### NODE_CONFIG_DIR
@@ -185,7 +193,7 @@ configuration points to the "config" folder of the current working dir
 If the path is relative (starts with a './' or '../') then the current
 working directory is used (determinated by `process.cwd()`)
 
-_This is disabled in v1.0.0 as this might cause problems when not installed using peerDependencies_  
+_This is disabled in v1.0.0 as this might cause problems when not installed using peerDependencies_
 ~~The current value of `NODE_CONFIG_DIR` is not available through
 `config.common`. The setting is being deleted from `process.env` and
 `process.argv` for security reasons.~~
@@ -205,8 +213,8 @@ environment variable it can be requested via the common section of the
 config
 
 ````js
-var config = require('configg')(__dirname);
-console.log(config.common.NODE_ENV);
+var config = require('configg')()
+console.log(config.common.NODE_ENV)
 ````
 
 ### HOSTNAME
@@ -222,8 +230,8 @@ sure you've got the right name.
 The current value can be obtained from `config.common.HOSTNAME`.
 
 ````js
-var config = require('configg')(__dirname);
-console.log(config.common.HOSTNAME);
+var config = require('configg')()
+console.log(config.common.HOSTNAME)
 ````
 
 ### NODE_APP_INSTANCE
@@ -236,8 +244,8 @@ The current value can be obtained from
 `config.common.NODE_APP_INSTANCE`.
 
 ````js
-var config = require('configg')(__dirname);
-console.log(config.common.NODE_APP_INSTANCE);
+var config = require('configg')()
+console.log(config.common.NODE_APP_INSTANCE)
 ````
 
 ### NODE_CONFIG
@@ -254,7 +262,7 @@ command line, the command line values will be favoured.
 **Example:**
 
 ```bash
-$ export NODE_CONFIG='{ "app-name": { "key": { "subkey": "value" } } }'
+$ export NODE_CONFIG='{"app-name":{"key":{ "subkey":"value"}}}'
 $ node myapp.js
 ```
 
@@ -262,9 +270,9 @@ The current value of `NODE_CONFIG` is not available through
 `config.common`. The setting is being deleted from `process.env` and
 `process.argv` for security reasons.
 
-### DEBUG=configg:*
+### DEBUG=configg
 
-If `DEBUG=configg:*` is set then each time "configg" is required the
+If `DEBUG=configg` is set then each time "configg" is required the
 returned config object will be printed to console using [debug][].
 
 This env-settings allows you to quickly check which config gets loaded
@@ -406,11 +414,11 @@ within your configuration.
 **Example:**
 
 ```js
-var config = require('configg')(__dirname);
-// => { config: { one: { a: 1 } } };
-config.get('config.one.a');
+var config = require('configg')()
+// => { config: { one: { a: 1 } } }
+config.get('config.one.a')
 // => 1
-config.config.get(['one','b','notthere']);
+config.config.get(['one','b','notthere'])
 // => undefined
 ```
 
@@ -513,7 +521,7 @@ Supported files for parsing are (in order of resolution)
 * [.yaml](../test/fixtures/myapp/config/default.yaml): [YAML][],
 * [.yml](../test/fixtures/myapp/config/default.yml): alternative [YAML][] extension
 * [.properties](../test/fixtures/myapp/config/default.properties): [Properties][]
-* ~~[.cson](../test/fixtures/myapp/config/default.cson): [CSON][]~~ (currently disabled as module doesn't work on Node v0.11)
+* [.cson](../test/fixtures/myapp/config/default.cson): [CSON][]
 
 ### Merging
 
@@ -557,7 +565,6 @@ modules- or even the Application-config.
 
 We still *keep code and config separate* but now *isolating* app and
 all modules from each other.
-
 
 # Annex
 
