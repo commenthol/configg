@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.1.1
+
+- fix automatic resolution
+
 ### 1.1.0
 
 - automatic resolution of package root to obtain `config` dir with `find-root` package

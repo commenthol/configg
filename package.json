@@ -1,6 +1,6 @@
 {
   "name": "configg",
-  "version": "1.1.0",
+  "version": "1.1.1-0",
   "description": "A node configuration manager",
   "keywords": [
     "conf",
@@ -45,6 +45,7 @@
     ]
   },
   "dependencies": {
+    "at-line": "^1.0.0",
     "coffee-script": "^1.12.2",
     "cson": "^4.0.0",
     "debug": "^3.1.0",

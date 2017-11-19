@@ -426,6 +426,11 @@ describe('#config', function () {
       delete configA.config
       deepEqual(configB, exp)
     })
+
+    it('from current file', function () {
+      var config = new Config().dir()
+      assert.deepEqual(config.config.get(config), { default: true, development: true })
+    })
   })
 
   describe('load files', function () {
