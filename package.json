@@ -29,7 +29,7 @@
   "scripts": {
     "__prepublish": "npm run lint && npm test",
     "clean": "rm -rf jsdoc coverage",
-    "cover": "istanbul cover _mocha --report lcov --report text -- -R dot --check-leaks test/*.mocha.js",
+    "cover": "nyc -r text -r html npm test",
     "doc": "jsdox -o docs index.js lib/*.js",
     "lint": "eslint --quiet --cache '**/*.js'",
     "test": "mocha"
@@ -65,7 +65,8 @@
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
-    "mocha": "^3.5.3"
+    "mocha": "^3.5.3",
+    "nyc": "^11.3.0"
   },
   "engines": {
     "node": ">=0.8.0"
