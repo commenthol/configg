@@ -27,7 +27,7 @@
     "url": "github.com/commenthol/configg"
   },
   "scripts": {
-    "clean": "rm -rf jsdoc coverage",
+    "clean": "rm -rf jsdoc coverage node_modules *.tgz",
     "cover": "nyc -r text -r html npm test",
     "doc": "jsdox -o docs index.js lib/*.js",
     "lint": "eslint --quiet --cache '**/*.js'",
