@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.1.2
+
+- bump dependencies
+
 ### 1.1.1
 
 - fix automatic resolution

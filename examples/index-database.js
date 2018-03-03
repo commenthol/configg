@@ -1,5 +1,5 @@
 /* ./index-database.js */
-var config = require('configg')(__dirname)
+var config = require('configg')()
 
 var database = require('my-database') // eslint-disable-line
 

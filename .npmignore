@@ -1,6 +1,7 @@
 /node_modules
 /coverage
 /config
+/examples
 /docs
 /test
 /tmp
