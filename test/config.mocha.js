@@ -31,11 +31,11 @@ function log (obj, other) { // eslint-disable-line
  */
 function deepEqual (o1, o2) {
   var res = hashtree.diff(o1, o2)
-  assert.equal(typeof o1, 'object')
-  assert.equal(typeof o2, 'object')
-  assert.deepEqual(res.diff1, res.diff2)
-  assert.deepEqual(res.diff1, {})
-  assert.deepEqual(res.diff2, {})
+  assert.strictEqual(typeof o1, 'object')
+  assert.strictEqual(typeof o2, 'object')
+  assert.deepStrictEqual(res.diff1, res.diff2)
+  assert.deepStrictEqual(res.diff1, {})
+  assert.deepStrictEqual(res.diff2, {})
 }
 
 describe('#config', function () {
@@ -378,7 +378,7 @@ describe('#config', function () {
       } catch (e) {
         err = e
       }
-      assert.equal(err.message, 'get method already defined')
+      assert.strictEqual(err.message, 'get method already defined')
     })
 
     it('from empty directory', function () {
@@ -429,7 +429,7 @@ describe('#config', function () {
 
     it('from current file', function () {
       var config = new Config().dir()
-      assert.deepEqual(config.config.get(config), { default: true, development: true })
+      assert.deepStrictEqual(config.config.get(config), { default: true, development: true })
     })
   })
 
@@ -465,19 +465,19 @@ describe('#config', function () {
         deepEqual(config, exp)
       })
       it('gets config value', function () {
-        assert.deepEqual(config.get('config.database.host'), exp.config.database.host)
+        assert.deepStrictEqual(config.get('config.database.host'), exp.config.database.host)
       })
       it('gets config value from config', function () {
-        assert.deepEqual(config.config.get(['database', 'host']), exp.config.database.host)
+        assert.deepStrictEqual(config.config.get(['database', 'host']), exp.config.database.host)
       })
       it('gets config value from common', function () {
-        assert.deepEqual(config.common.get('value'), exp.common.value)
+        assert.deepStrictEqual(config.common.get('value'), exp.common.value)
       })
       it('undefined config value', function () {
-        assert.deepEqual(config.get('config.notExists'), undefined)
+        assert.deepStrictEqual(config.get('config.notExists'), undefined)
       })
       it('undefined key returns config', function () {
-        assert.deepEqual(config.get(), exp)
+        assert.deepStrictEqual(config.get(), exp)
       })
     })
 
@@ -647,7 +647,7 @@ describe('#config', function () {
           HOSTNAME: 'server'
         }
       }
-      assert.deepEqual(config, exp)
+      assert.deepStrictEqual(config, exp)
     })
     it('failure NODE_ENV=test', function () {
       var err
@@ -662,7 +662,7 @@ describe('#config', function () {
       } catch (e) {
         err = e
       }
-      assert.equal(err.message, 'strict mode failed!')
+      assert.strictEqual(err.message, 'strict mode failed!')
     })
     it('good case NODE_APP_INSTANCE', function () {
       var dir = path.join(__dirname, 'fixtures/strictmode')
@@ -689,7 +689,7 @@ describe('#config', function () {
           'HOSTNAME': 'server'
         }
       }
-      assert.deepEqual(config, exp)
+      assert.deepStrictEqual(config, exp)
     })
     it('failure NODE_APP_INSTANCE', function () {
       var err
@@ -705,7 +705,7 @@ describe('#config', function () {
       } catch (e) {
         err = e
       }
-      assert.equal(err.message, 'strict mode failed!')
+      assert.strictEqual(err.message, 'strict mode failed!')
     })
   })
 })

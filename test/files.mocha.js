@@ -18,9 +18,9 @@ function assertObj (file) {
   assert.strictEqual(obj.config.database.host, 'dbhost')
   assert.strictEqual(obj.config.database.name, 'dbtest')
   assert.strictEqual(obj.config.database.port, 1529)
-  assert.deepEqual(obj.config.array, [1, '2', 3.01])
+  assert.deepStrictEqual(obj.config.array, [1, '2', 3.01])
   assert.strictEqual(obj.common.value, 'test')
-  assert.equal(file.error, undefined)
+  assert.strictEqual(file.error, undefined)
 }
 
 describe('#File', function () {
@@ -31,7 +31,7 @@ describe('#File', function () {
     })
     it('get right order of extensions', function () {
       var file = new File()
-      assert.deepEqual(file.extNames(), ['.js', '.json', '.json5', '.hjson', '.toml', '.coffee', '.yaml', '.yml', '.cson', '.properties'])
+      assert.deepStrictEqual(file.extNames(), ['.js', '.json', '.json5', '.hjson', '.toml', '.coffee', '.yaml', '.yml', '.cson', '.properties'])
     })
   })
 
@@ -86,10 +86,14 @@ describe('#File', function () {
     })
     it('properties file', function () {
       var file = new File(confDir + 'default.properties')
+      // make corrections - properties does not allow mixed arrays
+      file.obj.config.array[1] = String(file.obj.config.array[1])
       assertObj(file)
     })
     it('toml file', function () {
       var file = new File(confDir + 'default.toml')
+      // make corrections - toml does not allow mixed arrays
+      file.obj.config.array[1] = String(file.obj.config.array[1])
       assertObj(file)
     })
     it('yaml file', function () {

@@ -24,16 +24,16 @@ describe('#bindr', function () {
   it('should apply get method to obj', function () {
     var obj = { this: { is: { a: { test: 'yes' } } } }
     bindr(obj)
-    assert.deepEqual(obj.get('this'), { is: { a: { test: 'yes' } } })
-    assert.deepEqual(obj.get('this.is'), { a: { test: 'yes' } })
-    assert.deepEqual(obj.get('this.is.a'), { test: 'yes' })
-    assert.deepEqual(obj.get('this.is.a.test'), 'yes')
+    assert.deepStrictEqual(obj.get('this'), { is: { a: { test: 'yes' } } })
+    assert.deepStrictEqual(obj.get('this.is'), { a: { test: 'yes' } })
+    assert.deepStrictEqual(obj.get('this.is.a'), { test: 'yes' })
+    assert.deepStrictEqual(obj.get('this.is.a.test'), 'yes')
   })
 
   it('should return undefined if property cannot be found', function () {
     var obj = { this: { is: { a: { test: 'yes' } } } }
     bindr(obj)
-    assert.deepEqual(obj.get('that.is.a'), undefined)
-    assert.deepEqual(obj.get('this.isnt.a.test'), undefined)
+    assert.deepStrictEqual(obj.get('that.is.a'), undefined)
+    assert.deepStrictEqual(obj.get('this.isnt.a.test'), undefined)
   })
 })

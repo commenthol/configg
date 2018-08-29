@@ -25,7 +25,7 @@ describe('#utils', function () {
         }
       }
       var res = utils.parseNodeConfig(env)
-      assert.deepEqual(res, exp)
+      assert.deepStrictEqual(res, exp)
     })
     it('parse commandline config in JSON', function () {
       var env = {
@@ -39,13 +39,13 @@ describe('#utils', function () {
         }
       }
       var res = utils.parseNodeConfig(env)
-      assert.deepEqual(res, exp)
+      assert.deepStrictEqual(res, exp)
     })
     it('parse unset commandline config', function () {
       var env = {}
       var exp
       var res = utils.parseNodeConfig(env)
-      assert.deepEqual(res, exp)
+      assert.deepStrictEqual(res, exp)
     })
     it('parse bad commandline config', function () {
       var env = {
@@ -59,28 +59,28 @@ describe('#utils', function () {
 
   describe('#normConfigDir', function () {
     it('empty root', function () {
-      assert.equal(utils.normConfigDir(''), '/config/')
+      assert.strictEqual(utils.normConfigDir(''), '/config/')
     })
     it('root with /', function () {
-      assert.equal(utils.normConfigDir('/'), '/config/')
+      assert.strictEqual(utils.normConfigDir('/'), '/config/')
     })
     it('only dirname', function () {
-      assert.equal(utils.normConfigDir('/opt/test'), '/opt/test/config/')
+      assert.strictEqual(utils.normConfigDir('/opt/test'), '/opt/test/config/')
     })
     it('dirname with /', function () {
-      assert.equal(utils.normConfigDir('/opt/test/'), '/opt/test/config/')
+      assert.strictEqual(utils.normConfigDir('/opt/test/'), '/opt/test/config/')
     })
     it('dirname with config', function () {
-      assert.equal(utils.normConfigDir('/opt/test/config'), '/opt/test/config/')
+      assert.strictEqual(utils.normConfigDir('/opt/test/config'), '/opt/test/config/')
     })
     it('dirname with config/', function () {
-      assert.equal(utils.normConfigDir('/opt/test/config/'), '/opt/test/config/')
+      assert.strictEqual(utils.normConfigDir('/opt/test/config/'), '/opt/test/config/')
     })
     it('dirname with ..', function () {
-      assert.equal(utils.normConfigDir('/opt/test/other/../'), '/opt/test/config/')
+      assert.strictEqual(utils.normConfigDir('/opt/test/other/../'), '/opt/test/config/')
     })
     it('dirname with ../config/', function () {
-      assert.equal(utils.normConfigDir('/opt/test/other/../config/'), '/opt/test/config/')
+      assert.strictEqual(utils.normConfigDir('/opt/test/other/../config/'), '/opt/test/config/')
     })
   })
 
@@ -91,7 +91,7 @@ describe('#utils', function () {
       }
       var res = utils.baseNames(env)
       var exp = ['default', 'development', 'local', 'local-development']
-      assert.deepEqual(res, exp)
+      assert.deepStrictEqual(res, exp)
     })
     it('NODE_ENV is production and NODE_APP_INSTANCE is myserver', function () {
       var env = {
@@ -100,7 +100,7 @@ describe('#utils', function () {
       }
       var res = utils.baseNames(env)
       var exp = ['default', 'default-1', 'production', 'production-1', 'local', 'local-1', 'local-production', 'local-production-1']
-      assert.deepEqual(res, exp)
+      assert.deepStrictEqual(res, exp)
     })
     it('NODE_ENV is production and HOSTNAME is www1', function () {
       var env = {
@@ -109,7 +109,7 @@ describe('#utils', function () {
       }
       var res = utils.baseNames(env)
       var exp = ['default', 'production', 'www', 'www-production', 'local', 'local-production']
-      assert.deepEqual(res, exp)
+      assert.deepStrictEqual(res, exp)
     })
     it('NODE_ENV is production, NODE_APP_INSTANCE is 2, HOSTNAME is www ', function () {
       var env = {
@@ -119,7 +119,7 @@ describe('#utils', function () {
       }
       var res = utils.baseNames(env)
       var exp = ['default', 'default-2', 'production', 'production-2', 'www', 'www-2', 'www-production', 'www-production-2', 'local', 'local-2', 'local-production', 'local-production-2']
-      assert.deepEqual(res, exp)
+      assert.deepStrictEqual(res, exp)
     })
   })
 
@@ -130,7 +130,7 @@ describe('#utils', function () {
         'name': 'sample-prj',
         'version': '0.1.0'
       }
-      assert.deepEqual(res, exp)
+      assert.deepStrictEqual(res, exp)
     })
     it('bad config dir', function () {
       var res
@@ -140,7 +140,7 @@ describe('#utils', function () {
       } catch (e) {
         res = e
       }
-      assert.equal(res.message, exp)
+      assert.strictEqual(res.message, exp)
     })
     it('module-a', function () {
       var res = utils.discoverModuleNameVersion(path.join(__dirname, 'fixtures/prj/node_modules/module-a/config/'))
@@ -148,7 +148,7 @@ describe('#utils', function () {
         'name': 'module-a',
         'version': '0.1.0'
       }
-      assert.deepEqual(res, exp)
+      assert.deepStrictEqual(res, exp)
     })
   })
 
@@ -172,12 +172,12 @@ describe('#utils', function () {
       }
 
       // ~ console.log(toObj(files));
-      assert.deepEqual(toObj(files), exp)
+      assert.deepStrictEqual(toObj(files), exp)
     })
     it('read from not existing dir', function () {
       var exp
       var res = utils.readDir(path.join(__dirname, 'fix/'))
-      assert.equal(res, exp)
+      assert.strictEqual(res, exp)
     })
     it('read from not existing dir in strict mode', function () {
       var err
@@ -186,7 +186,7 @@ describe('#utils', function () {
       } catch (e) {
         err = e
       }
-      assert.equal(err.message, 'strict mode failed!')
+      assert.strictEqual(err.message, 'strict mode failed!')
     })
   })
 
@@ -204,7 +204,7 @@ describe('#utils', function () {
         'HOSTNAME': 'www'
       }
       var res = utils.env(env)
-      assert.deepEqual(res, exp)
+      assert.deepStrictEqual(res, exp)
     })
     it('return desired custom values', function () {
       var env = {
@@ -217,7 +217,7 @@ describe('#utils', function () {
         'NODE_ENV': 'test'
       }
       var res = utils.env(env, ['NODE_ENV'])
-      assert.deepEqual(res, exp)
+      assert.deepStrictEqual(res, exp)
     })
   })
 
