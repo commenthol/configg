@@ -1,6 +1,6 @@
 {
   "name": "configg",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A node configuration manager",
   "keywords": [
     "conf",
