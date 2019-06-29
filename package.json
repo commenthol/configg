@@ -1,6 +1,6 @@
 {
   "name": "configg",
-  "version": "1.2.3",
+  "version": "2.0.0-0",
   "description": "A node configuration manager",
   "keywords": [
     "conf",
@@ -27,11 +27,12 @@
     "test": "test"
   },
   "scripts": {
+    "all": "npm run test && npm run lint",
     "clean": "rm -rf jsdoc coverage node_modules *.tgz",
     "cover": "nyc -r text -r html npm test",
     "doc": "jsdox -o docs index.js lib/*.js",
-    "lint": "eslint --cache '**/*.js'",
-    "prepare": "npm run lint && npm test",
+    "lint": "eslint --cache lib test config examples",
+    "prepublishOnly": "npm run all",
     "test": "mocha"
   },
   "eslintConfig": {
@@ -59,17 +60,17 @@
     "cson": "^5.1.0",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-node": "^9.0.1",
-    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "mocha": "^6.1.4",
-    "nyc": "^14.1.0",
+    "nyc": "^14.1.1",
     "properties": "^1.2.1",
     "toml": "^3.0.0"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "maintainers": "commenthol <commenthol@gmail.com>"
 }

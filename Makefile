@@ -1,4 +1,4 @@
-engines = 6. 8. 9.
+engines = 8. 10. 12.
 docs = README.md doc/documentation.md
 
 all: engines
