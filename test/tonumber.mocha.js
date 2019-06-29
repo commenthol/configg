@@ -8,7 +8,7 @@
 /* global describe, it */
 
 var assert = require('assert')
-var toNumber = require('../lib/tonumber')
+var toNumber = require('../src/tonumber')
 
 describe('#toNumber', function () {
   it('convert 0', function () {

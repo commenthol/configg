@@ -7,7 +7,7 @@
 'use strict'
 
 // module dependencies
-const Config = require('./lib/config')
+const Config = require('./src/config')
 
 // the global config object
 const globalConfig = new Config()

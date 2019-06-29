@@ -8,7 +8,7 @@
 /* global describe, it, before */
 
 var assert = require('assert')
-var env = require('../lib/envvar')
+var env = require('../src/envvar')
 
 describe('#envVar', function () {
   describe('resolve', function () {

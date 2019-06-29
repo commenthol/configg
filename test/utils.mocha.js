@@ -9,7 +9,7 @@
 
 var path = require('path')
 var assert = require('assert')
-var utils = require('../lib/utils')
+var utils = require('../src/utils')
 
 describe('#utils', function () {
   describe('#parseNodeConfig', function () {

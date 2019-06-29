@@ -8,7 +8,7 @@
 /* global describe, it */
 
 var assert = require('assert')
-var File = require('../lib/files')
+var File = require('../src/files')
 var path = require('path')
 
 var confDir = path.join(__dirname, 'fixtures/myapp/config/')

@@ -8,7 +8,7 @@
 /* global describe, it */
 
 var assert = require('assert')
-var bindr = require('../lib/bindr')
+var bindr = require('../src/bindr')
 
 describe('#bindr', function () {
   it('should return if obj is not defined', function () {

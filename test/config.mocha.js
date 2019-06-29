@@ -13,7 +13,7 @@
 var fs = require('fs')
 var _ = require('lodash')
 var assert = require('assert')
-var Config = require('../lib/config')
+var Config = require('../src/config')
 var hashtree = require('hashtree').hashTree
 var path = require('path')
 
