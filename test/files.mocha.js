@@ -31,7 +31,10 @@ describe('#File', function () {
     })
     it('get right order of extensions', function () {
       var file = new File()
-      assert.deepStrictEqual(file.extNames(), ['.js', '.json', '.json5', '.hjson', '.toml', '.coffee', '.yaml', '.yml', '.cson', '.properties'])
+      assert.deepStrictEqual(file.extNames(), [
+        '.js', '.json', '.json5', '.hjson', '.yaml', '.yml',
+        '.coffee', '.cson', '.properties', '.toml'
+      ])
     })
   })
 

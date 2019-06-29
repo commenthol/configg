@@ -512,16 +512,23 @@ with the next file as described in [File loading order](#File_loading_order).
 
 Supported files for parsing are (in order of resolution)
 
-* [.js](../test/fixtures/myapp/config/default.js): javascript
-* [.json](../test/fixtures/myapp/config/default.json): [JSON][]
-* [.json5](../test/fixtures/myapp/config/default.json5): [json5][]
-* [.hjson](../test/fixtures/myapp/config/default.hjson): [human json][Hjson]
-* [.toml](../test/fixtures/myapp/config/default.toml): [TOML][]
-* [.coffee](../test/fixtures/myapp/config/default.coffee): coffee-script
-* [.yaml](../test/fixtures/myapp/config/default.yaml): [YAML][],
-* [.yml](../test/fixtures/myapp/config/default.yml): alternative [YAML][] extension
-* [.properties](../test/fixtures/myapp/config/default.properties): [Properties][]
-* [.cson](../test/fixtures/myapp/config/default.cson): [CSON][]
+* [**.js**](../test/fixtures/myapp/config/default.js) : javascript
+* [**.json**](../test/fixtures/myapp/config/default.json) : [JSON][]
+* [**.json5**](../test/fixtures/myapp/config/default.json5) : [json5][]
+* [**.hjson**](../test/fixtures/myapp/config/default.hjson) : [human json][Hjson]
+* [**.yaml**](../test/fixtures/myapp/config/default.yaml) : [YAML][],
+* [**.yml**](../test/fixtures/myapp/config/default.yml) : alternative [YAML][] extension
+
+If using these file types please add the required dependencies to your project
+
+* [**.coffee**](../test/fixtures/myapp/config/default.coffee) : coffee-script;
+  install with `npm i -S coffeescript`
+* [**.cson**](../test/fixtures/myapp/config/default.cson) : [CSON][];
+  install with `npm i -S cson`
+* [**.properties**](../test/fixtures/myapp/config/default.properties) : [Properties][];
+  install with `npm i -S properties`
+* [**.toml**](../test/fixtures/myapp/config/default.toml) : [TOML][];
+  install with `npm i -S toml`
 
 ### Merging
 
