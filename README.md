@@ -46,6 +46,7 @@ The following examples use [Hjson][] but [other file formats](./doc/documentatio
 including Js, JSON are supported.
 
 All examples can be found in the [examples folder](./examples).
+Run `run.sh` to see things in action.
 
 **Install configg in your App directory**
 
@@ -59,7 +60,7 @@ $ mkdir config
 ```js
 /* ./config/default.hjson */
 {
-  config: {
+  config: { // < always start with a config object...
     backend: {
       // configuration values of your app/ module go in here
       host: "test-system",
@@ -115,7 +116,8 @@ using a "my-database" module.
 In development you'd like to use the [default settings](./examples/node_modules/my-database/config/default.js)
 provided within "my-database" but change the host and credentials.
 
-> Note: This module uses a "JS" file for the config.
+All examples can be found in the [examples folder](./examples).
+Run `run-database.sh` to see things in action.
 
 ```js
 /* /node_modules/my-database/config/default.js */
@@ -160,8 +162,7 @@ console.log(config.get('config.backend'))
 **Running the App in development:**
 
 ```
-$ export NODE_ENV=""
-$ node index-database.js
+$ NODE_ENV="" node index-database.js
 ---- Module "my-database" ----
 { host: 'test-db',
   port: 1529,
@@ -176,7 +177,7 @@ In your Application configuration add a branch named after the "my-database" mod
 ```js
 /* ./config/production.hjson */
 {
-  config: {
+  config: { //< The config for the current module
     backend: {
       host: "production-system",
       path: "/path-on-prod"

@@ -259,10 +259,15 @@ the config files.
 If `NODE_CONFIG` is supplied both from the OS environment and the
 command line, the command line values will be favoured.
 
+> NOTE: Instead of `config:` always use the package name of the module which
+> runs configg.  
+
 **Example:**
 
+Note: Use package name (here `app-name`) instead of `config`!
+
 ```bash
-$ export NODE_CONFIG='{"app-name":{"key":{ "subkey":"value"}}}'
+$ export NODE_CONFIG='{"app-name":{"key":{"subkey":"value"}}}'
 $ node myapp.js
 ```
 
@@ -303,7 +308,7 @@ Strict mode is off by default.
 
 A configuration for an app or module is primarily bound to its
 `./config` directory and then on the folder specified via
-`NODE_CONFIG_DIR` (or implicitely via `process.cwd + '/config'`).
+`NODE_CONFIG_DIR` (or implicitly via `process.cwd + '/config'`).
 
 For each module/app at first the `./config` folder next the
 `package.json` file gets loaded (basic) which at second get overwritten by the
