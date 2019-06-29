@@ -1,16 +1,16 @@
 /**
  * @module configg
- * @copyright 2015 commenthol
+ * @copyright 2015-2019 commenthol
  * @license MIT
  */
 
 'use strict'
 
 // module dependencies
-var Config = require('./lib/config')
+const Config = require('./lib/config')
 
 // the global config object
-var globalConfig = new Config()
+const globalConfig = new Config()
 
 /**
  * read configuration from `dir` and merge
@@ -19,8 +19,8 @@ var globalConfig = new Config()
  * @throws {Error}
  * @return {Object} configuration object
  */
-var M = function (dir) {
-  var conf = globalConfig.dir(dir)
+const M = function (dir) {
+  const conf = globalConfig.dir(dir)
   return conf
 }
 
