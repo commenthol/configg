@@ -7,7 +7,7 @@
 'use strict'
 
 // module dependencies
-const _ = require('lodash')
+const _merge = require('lodash.merge')
 const File = require('./files')
 const envVar = require('./envvar')
 const utils = require('./utils')
@@ -82,7 +82,7 @@ Config.prototype.dir = function (dirname) {
  * @return {Object} - merged object
  */
 Config.prototype.mergeAppConfig = function () {
-  const obj = _.merge({},
+  const obj = _merge({},
     this._entriesApp[1], // NODE_CONFIG_DIR from env/args
     this._entriesApp[0] // NODE_CONFIG from env/args
   )
@@ -102,9 +102,9 @@ Config.prototype.mergeModuleConfig = function (dirname) {
 
   if (entry) {
     if (!entry.isMerged) {
-      const obj = _.merge({}, entry.obj, this.mergeAppConfig())
+      const obj = _merge({}, entry.obj, this.mergeAppConfig())
       // overwrite with version specials
-      obj.config = _.merge({}, obj[entry.name], obj[entry.name + '@' + entry.version])
+      obj.config = _merge({}, obj[entry.name], obj[entry.name + '@' + entry.version])
       entry.obj = {
         config: obj.config,
         common: obj.common
@@ -112,11 +112,11 @@ Config.prototype.mergeModuleConfig = function (dirname) {
       entry.isMerged = true
     }
     // deepClone to isolate config
-    out.config = _.merge({}, entry.obj.config)
-    out.common = _.merge({}, entry.obj.common)
+    out.config = _merge({}, entry.obj.config)
+    out.common = _merge({}, entry.obj.common)
   }
   // add env variables to common - ensures that module configs get them as well
-  out.common = _.merge(out.common || {}, utils.env(this.env))
+  out.common = _merge(out.common || {}, utils.env(this.env))
 
   return out
 }
@@ -148,7 +148,7 @@ Config.prototype.loadFiles = function (dirname, name, strictMode) {
         // found first allowed file
         found.push(filename)
         const file = new File(dirname + filename) // load and parse
-        obj = _.merge(obj || {}, file.obj)
+        obj = _merge(obj || {}, file.obj)
         break
       }
     }
@@ -156,7 +156,7 @@ Config.prototype.loadFiles = function (dirname, name, strictMode) {
 
   // move obj.config to obj[name]
   if (name && obj && obj.config) {
-    obj[name] = _.merge({}, obj.config, obj[name])
+    obj[name] = _merge({}, obj.config, obj[name])
   }
 
   if (strictMode && !utils.strictModeCheck(this.env, found)) {

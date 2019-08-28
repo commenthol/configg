@@ -53,7 +53,7 @@
     "hjson": "^3.1.2",
     "js-yaml": "^3.13.1",
     "json5": "^2.1.0",
-    "lodash": "^4.17.15"
+    "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
     "coffeescript": "^2.4.1",

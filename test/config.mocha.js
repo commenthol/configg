@@ -8,7 +8,7 @@
 /* eslint no-new: 0 */
 
 const fs = require('fs')
-const _ = require('lodash')
+const _merge = require('lodash.merge')
 const assert = require('assert')
 const Config = require('../src/config')
 const hashtree = require('hashtree').hashTree
@@ -623,7 +623,7 @@ describe('#config', function () {
   describe('strict mode', function () {
     it('good case', function () {
       const dir = path.join(__dirname, 'fixtures/strictmode')
-      _.merge(process.env, {
+      _merge(process.env, {
         NODE_CONFIG_STRICT_MODE: 'Y',
         NODE_CONFIG_DIR: dir + '/configdir',
         NODE_ENV: 'production'
@@ -649,7 +649,7 @@ describe('#config', function () {
     it('failure NODE_ENV=test', function () {
       let err
       const dir = path.join(__dirname, 'fixtures/strictmode')
-      _.merge(process.env, {
+      _merge(process.env, {
         NODE_CONFIG_STRICT_MODE: 'Y',
         NODE_CONFIG_DIR: dir + '/configdir',
         NODE_ENV: 'test'
@@ -663,7 +663,7 @@ describe('#config', function () {
     })
     it('good case NODE_APP_INSTANCE', function () {
       const dir = path.join(__dirname, 'fixtures/strictmode')
-      _.merge(process.env, {
+      _merge(process.env, {
         NODE_CONFIG_STRICT_MODE: 'Y',
         NODE_APP_INSTANCE: 2,
         NODE_CONFIG_DIR: dir + '/configdir',
@@ -691,7 +691,7 @@ describe('#config', function () {
     it('failure NODE_APP_INSTANCE', function () {
       let err
       const dir = path.join(__dirname, 'fixtures/strictmode')
-      _.merge(process.env, {
+      _merge(process.env, {
         NODE_CONFIG_STRICT_MODE: 'Y',
         NODE_APP_INSTANCE: 1,
         NODE_CONFIG_DIR: dir + '/configdir',
