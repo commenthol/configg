@@ -7,5 +7,8 @@ module.exports = {
   // common settings available to all modules
   common: {
     value: 'VAULT_NACL(AQAQJwAAOMIYO4grrNVKze4gSq4bqKtFN8B0obQamFsuDubjkP0/7G3BUbLWbONO+PKnKIGR0i26dw==)'
-  }
+  },
+  plugins: [
+    ['configg-plugin-vault-nacl']
+  ]
 }

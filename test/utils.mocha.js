@@ -159,7 +159,8 @@ describe('#utils', function () {
         prj: 1,
         test: 1,
         strictmode: 1,
-        vaultnacl: 1
+        'plugin-vault-nacl': 1,
+        'plugin-async': 1
       }
 
       function toObj (arr) {

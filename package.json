@@ -31,7 +31,8 @@
     "clean": "rm -rf jsdoc coverage node_modules *.tgz",
     "cover": "nyc -r text -r html npm test",
     "doc": "jsdox -o docs index.js src/*.js",
-    "lint": "eslint --cache src test config examples",
+    "lint": "eslint src test config examples",
+    "readme": "markedpp --github -i README.md -o README.md",
     "prepublishOnly": "npm run all",
     "test": "mocha"
   },
@@ -47,6 +48,7 @@
   },
   "dependencies": {
     "at-line": "^1.0.0",
+    "deasync": "^0.1.15",
     "debug": "^4.1.1",
     "find-root": "^1.1.0",
     "hashtree": "^0.7.0",
@@ -68,7 +70,8 @@
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "properties": "^1.2.1",
-    "toml": "^3.0.0"
+    "toml": "^3.0.0",
+    "configg-plugin-vault-nacl": "*"
   },
   "engines": {
     "node": ">=8.0.0"

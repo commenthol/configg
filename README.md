@@ -26,10 +26,7 @@ is maintained by extracting name and version from the `package.json` file.
 This allows extending/ overwriting values for modules from your App-config
 or even a module which includes other sub-modules.
 
-Sensitive information can be encrypted using [vault-nacl][]. Providing the
-password via env-var `VAULT_NACL` or within a file allows automatic decryption
-of your app. The password file could e.g. be provided using
-[docker-secret][].
+Extensible with plugins... Check npm for keyword [configg-plugin][].
 
 This project is inspired from [node-config][].
 
@@ -39,6 +36,7 @@ This project is inspired from [node-config][].
 
 * [Quick Start](#quick-start)
   * [Use module overrides](#use-module-overrides)
+* [Plugins](#plugins)
 * [Documentation](#documentation)
 * [Contribution and License Agreement](#contribution-and-license-agreement)
 * [License](#license)
@@ -212,46 +210,25 @@ $ node index-database.js --NODE_ENV=production
 { host: 'production-system', port: 8080, timeout: 3600, path: '/path-on-prod' }
 ```
 
-### Encrypted values with vault-nacl
+## Plugins
 
-To create a file with an encrypted value surround the value in question with
-`VAULT_NACL()VAULT_NACL`.
+Check npm for keyword [configg-plugin][].
+
+To use plugins add a `plugins` array to the `default` or any config file.
 
 ```js
-/* config/default.js */
 module.exports = {
   config: {
-    host: 'test-db',
-    port: 1529,
-    credentials: {
-      user: 'test',
-      pass: 'VAULT_NACL(my db password)VAULT_NACL'
-    }
-  }
+    // ...
+  },
+  common: {
+    // ...
+  },
+  plugins: [
+    ['configg-plugin-vault-nacl']
+  ]
 }
 ```
-
-then encrypt the value(s) with a single password, e.g. 'password123'
-
-```
-npx vault-nacl encrypt config/default.js
-```
-Now you are able to store the file within GIT or CVS of choice.
-
-To start the application provide the environment variable `VAULT_NACL` e.g.
-
-```
-VAULT_NACL=password123 npm start
-```
-
-Other options include mounting a `vault-nacl.txt` file into `./config` using
-[docker-secret][] or explicitely naming with the `VAULT_NACL_FILE` env-variable.
-
-For further documentation check `npx vault-nacl --help`
-
-> **NOTE**   
-> Make sure that all encrypted values for a given environment can be
-> decrypted with **ONE single password**.
 
 ## Documentation
 
@@ -274,5 +251,5 @@ See [LICENSE][] for more info.
 [The Twelve-Factor App]: https://12factor.net
 [Hjson]: https://laktak.github.io/hjson/
 [node-config]: https://npmjs.com/package/node-config
-[vault-nacl]: https://npmjs.com/package/vault-nacl
-[docker-secret]: https://docs.docker.com/engine/reference/commandline/secret/
+[configg-plugin-vault-nacl]: https://npmjs.com/package/configg-plugin-vault-nacl
+[configg-plugin]: https://www.npmjs.com/search?q=keywords:configg-plugin

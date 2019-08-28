@@ -706,7 +706,9 @@ describe('#config', function () {
     })
   })
 
-  describe('vault-nacl', function () {
+  describe('plugin-vault-nacl', function () {
+    const dir = path.join(__dirname, 'fixtures/plugin-vault-nacl/config')
+
     beforeEach(() => {
       Reflect.deleteProperty(process.env, 'VAULT_NACL')
       Reflect.deleteProperty(process.env, 'VAULT_NACL_FILE')
@@ -716,7 +718,6 @@ describe('#config', function () {
     })
 
     it('shall decrypt using vault-nacl.txt file in config dir', function () {
-      const dir = path.join(__dirname, 'fixtures/vaultnacl/config')
       Reflect.deleteProperty(process.env, 'NODE_ENV')
       Reflect.deleteProperty(process.env, 'NODE_CONFIG_STRICT_MODE')
       _merge(process.env, {
@@ -740,7 +741,6 @@ describe('#config', function () {
     })
 
     it('shall decrypt using env VAULT_NACL', function () {
-      const dir = path.join(__dirname, 'fixtures/vaultnacl/config')
       _merge(process.env, {
         NODE_ENV: 'production',
         NODE_CONFIG_DIR: dir,
@@ -764,7 +764,6 @@ describe('#config', function () {
     })
 
     it('shall decrypt using env VAULT_NACL_FILE', function () {
-      const dir = path.join(__dirname, 'fixtures/vaultnacl/config')
       _merge(process.env, {
         NODE_ENV: 'production',
         NODE_CONFIG_DIR: dir,
@@ -788,7 +787,6 @@ describe('#config', function () {
     })
 
     it('shall fail to decrypt if values are encrypted with different passwords', function () {
-      const dir = path.join(__dirname, 'fixtures/vaultnacl/config')
       _merge(process.env, {
         NODE_ENV: 'test',
         NODE_CONFIG_DIR: dir,
@@ -798,6 +796,36 @@ describe('#config', function () {
       assert.throws(() => {
         cconfig.dir(dir)
       }, /Decrypt failed at "common.value"/)
+    })
+  })
+
+  describe('plugin-async', function () {
+    const dir = path.join(__dirname, 'fixtures/plugin-async/config')
+
+    beforeEach(() => {
+      Reflect.deleteProperty(process.env, 'NODE_ENV')
+      Reflect.deleteProperty(process.env, 'NODE_CONFIG_STRICT_MODE')
+      Reflect.deleteProperty(process.env, 'NODE_APP_INSTANCE')
+    })
+
+    it('shall run plugin asynchronously', function () {
+      _merge(process.env, {
+        NODE_CONFIG_DIR: dir
+      })
+      const cconfig = new Config()
+      const config = cconfig.dir(dir)
+      const exp = {
+        config: {
+          default: true,
+          plugin: true
+        },
+        common: {
+          NODE_ENV: 'development',
+          NODE_APP_INSTANCE: undefined,
+          HOSTNAME: 'server'
+        }
+      }
+      assert.deepStrictEqual(config, exp)
     })
   })
 })

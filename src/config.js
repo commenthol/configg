@@ -8,7 +8,7 @@
 
 // module dependencies
 const _merge = require('lodash.merge')
-const vaultNaclDecrypt = require('./vaultNaclDecrypt')
+const plugins = require('./plugins')
 const File = require('./files')
 const envVar = require('./envvar')
 const utils = require('./utils')
@@ -65,7 +65,9 @@ Config.prototype.dir = function (dirname) {
     const obj = this.loadFiles(dirname, nameVersion.name)
     this.addEntry(dirname, nameVersion.name, nameVersion.version, obj)
   }
-  const conf = vaultNaclDecrypt(this.mergeModuleConfig(dirname), { dirname })
+  const mergeConf = this.mergeModuleConfig(dirname)
+  const conf = plugins(mergeConf, { dirname })
+  Reflect.deleteProperty(conf, 'plugins')
 
   // add methods
   bindr(conf)
@@ -108,13 +110,15 @@ Config.prototype.mergeModuleConfig = function (dirname) {
       obj.config = _merge({}, obj[entry.name], obj[entry.name + '@' + entry.version])
       entry.obj = {
         config: obj.config,
-        common: obj.common
+        common: obj.common,
+        plugins: obj.plugins
       }
       entry.isMerged = true
     }
     // deepClone to isolate config
     out.config = _merge({}, entry.obj.config)
     out.common = _merge({}, entry.obj.common)
+    out.plugins = entry.obj.plugins
   }
   // add env variables to common - ensures that module configs get them as well
   out.common = _merge(out.common || {}, utils.env(this.env))
