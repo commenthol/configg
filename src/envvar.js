@@ -1,6 +1,6 @@
 /**
- * @module lib/envvar
- * @copyright 2015 commenthol
+ * @module src/envvar
+ * @copyright 2015- commenthol
  * @license MIT
  */
 

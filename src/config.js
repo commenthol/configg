@@ -1,6 +1,6 @@
 /**
- * @module lib/config
- * @copyright 2015 commenthol
+ * @module src/config
+ * @copyright 2015- commenthol
  * @license MIT
  */
 

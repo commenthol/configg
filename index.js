@@ -1,6 +1,6 @@
 /**
  * @module configg
- * @copyright 2015-2019 commenthol
+ * @copyright 2015- commenthol
  * @license MIT
  */
 

@@ -1,6 +1,6 @@
 /**
- * @module lib/bindr
- * @copyright 2015 commenthol
+ * @module src/bindr
+ * @copyright 2015- commenthol
  * @license MIT
  */
 

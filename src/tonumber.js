@@ -1,6 +1,6 @@
 /*
- * @module lib/tonumber
- * @copyright 2015 commenthol
+ * @module src/tonumber
+ * @copyright 2015- commenthol
  * @license MIT
  */
 
