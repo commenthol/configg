@@ -705,4 +705,99 @@ describe('#config', function () {
       assert.strictEqual(err.message, 'strict mode failed!')
     })
   })
+
+  describe('vault-nacl', function () {
+    beforeEach(() => {
+      Reflect.deleteProperty(process.env, 'VAULT_NACL')
+      Reflect.deleteProperty(process.env, 'VAULT_NACL_FILE')
+      Reflect.deleteProperty(process.env, 'NODE_ENV')
+      Reflect.deleteProperty(process.env, 'NODE_CONFIG_STRICT_MODE')
+      Reflect.deleteProperty(process.env, 'NODE_APP_INSTANCE')
+    })
+
+    it('shall decrypt using vault-nacl.txt file in config dir', function () {
+      const dir = path.join(__dirname, 'fixtures/vaultnacl/config')
+      Reflect.deleteProperty(process.env, 'NODE_ENV')
+      Reflect.deleteProperty(process.env, 'NODE_CONFIG_STRICT_MODE')
+      _merge(process.env, {
+        NODE_CONFIG_DIR: dir
+      })
+      const cconfig = new Config()
+      const config = cconfig.dir(dir)
+      const exp = {
+        config: {
+          secret: 'not for your eyes',
+          url: 'http://default/'
+        },
+        common: {
+          value: 'test',
+          NODE_ENV: 'development',
+          NODE_APP_INSTANCE: undefined,
+          HOSTNAME: 'server'
+        }
+      }
+      assert.deepStrictEqual(config, exp)
+    })
+
+    it('shall decrypt using env VAULT_NACL', function () {
+      const dir = path.join(__dirname, 'fixtures/vaultnacl/config')
+      _merge(process.env, {
+        NODE_ENV: 'production',
+        NODE_CONFIG_DIR: dir,
+        VAULT_NACL: 'pass@production'
+      })
+      const cconfig = new Config()
+      const config = cconfig.dir(dir)
+      const exp = {
+        config: {
+          secret: 'the production secret',
+          url: 'http://default/'
+        },
+        common: {
+          value: 'test',
+          NODE_ENV: 'production',
+          NODE_APP_INSTANCE: undefined,
+          HOSTNAME: 'server'
+        }
+      }
+      assert.deepStrictEqual(config, exp)
+    })
+
+    it('shall decrypt using env VAULT_NACL_FILE', function () {
+      const dir = path.join(__dirname, 'fixtures/vaultnacl/config')
+      _merge(process.env, {
+        NODE_ENV: 'production',
+        NODE_CONFIG_DIR: dir,
+        VAULT_NACL_FILE: path.resolve(dir, '..', 'vault-nacl.txt')
+      })
+      const cconfig = new Config()
+      const config = cconfig.dir(dir)
+      const exp = {
+        config: {
+          secret: 'the production secret',
+          url: 'http://default/'
+        },
+        common: {
+          value: 'test',
+          NODE_ENV: 'production',
+          NODE_APP_INSTANCE: undefined,
+          HOSTNAME: 'server'
+        }
+      }
+      assert.deepStrictEqual(config, exp)
+    })
+
+    it('shall fail to decrypt if values are encrypted with different passwords', function () {
+      const dir = path.join(__dirname, 'fixtures/vaultnacl/config')
+      _merge(process.env, {
+        NODE_ENV: 'test',
+        NODE_CONFIG_DIR: dir,
+        VAULT_NACL: 'pass@production'
+      })
+      const cconfig = new Config()
+      assert.throws(() => {
+        cconfig.dir(dir)
+      }, /Decrypt failed at "common.value"/)
+    })
+  })
 })

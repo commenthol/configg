@@ -8,6 +8,7 @@
 
 // module dependencies
 const _merge = require('lodash.merge')
+const vaultNaclDecrypt = require('./vaultNaclDecrypt')
 const File = require('./files')
 const envVar = require('./envvar')
 const utils = require('./utils')
@@ -64,7 +65,7 @@ Config.prototype.dir = function (dirname) {
     const obj = this.loadFiles(dirname, nameVersion.name)
     this.addEntry(dirname, nameVersion.name, nameVersion.version, obj)
   }
-  const conf = this.mergeModuleConfig(dirname)
+  const conf = vaultNaclDecrypt(this.mergeModuleConfig(dirname), { dirname })
 
   // add methods
   bindr(conf)

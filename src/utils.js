@@ -105,7 +105,7 @@ utils.normConfigDir = function (dir) {
   if (dir === undefined) {
     throw new Error('No directory')
   }
-  dir = dir.replace(/^(.*?)(?:\/(?:config\/?)?)?$/, '$1/config/')
+  dir = dir.replace(/^(.*?)(?:\/(?:config\/?)|)?$/, '$1/config/')
   return path.normalize(dir)
 }
 

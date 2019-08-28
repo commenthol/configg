@@ -158,7 +158,8 @@ describe('#utils', function () {
         myapp: 1,
         prj: 1,
         test: 1,
-        strictmode: 1
+        strictmode: 1,
+        vaultnacl: 1
       }
 
       function toObj (arr) {
