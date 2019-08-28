@@ -5,8 +5,8 @@
 
 'use strict'
 
-var assert = require('assert')
-var env = require('../src/envvar')
+const assert = require('assert')
+const env = require('../src/envvar')
 
 describe('#envVar', function () {
   describe('resolve', function () {
@@ -41,7 +41,7 @@ describe('#envVar', function () {
 
   describe('resolveHostname', function () {
     it('resolve hostname from HOSTNAME', function () {
-      var exp = 'myserver'
+      const exp = 'myserver'
       process.env.HOSTNAME = exp
 
       assert.strictEqual(process.env.HOSTNAME, exp)
@@ -54,7 +54,7 @@ describe('#envVar', function () {
       assert.strictEqual(env.resolveHostname(), require('os').hostname())
     })
     it('resolve hostname from HOSTNAME from commandline', function () {
-      var exp = 'myserver'
+      const exp = 'myserver'
       process.argv.push('--HOSTNAME=' + exp)
 
       assert.strictEqual(env.resolveHostname(), exp)
@@ -71,8 +71,8 @@ describe('#envVar', function () {
         '--NODE_APP_INSTANCE=4',
         '--NODE_CONFIG={ "test": 1 }'
       ]
-      var res = env.setup()
-      var exp = {
+      const res = env.setup()
+      const exp = {
         NODE_ENV: 'prod',
         NODE_CONFIG_DIR: '/opt/config',
         NODE_APP_INSTANCE: '4',
@@ -90,8 +90,8 @@ describe('#envVar', function () {
         __filename,
         '--NODE_CONFIG_DIR=./config'
       ]
-      var res = env.setup()
-      var exp = {
+      const res = env.setup()
+      const exp = {
         NODE_CONFIG_DIR: process.cwd() + '/config'
       }
 
@@ -112,7 +112,7 @@ describe('#envVar', function () {
         '--NODE_CONFIG={ "test": 1 }'
       ]
       env.delvars()
-      var exp = ['--NODE_ENV=prod', 'DEL', '--NODE_APP_INSTANCE=4', 'DEL']
+      const exp = ['--NODE_ENV=prod', 'DEL', '--NODE_APP_INSTANCE=4', 'DEL']
 
       assert.deepStrictEqual(process.argv.slice(2), exp)
     })
@@ -124,7 +124,7 @@ describe('#envVar', function () {
       process.env.NODE_CONFIG = '{ "test": 1 }'
 
       env.delvars()
-      var exp = {
+      const exp = {
         NODE_ENV: 'prod',
         NODE_CONFIG_DIR: undefined,
         NODE_APP_INSTANCE: 4,

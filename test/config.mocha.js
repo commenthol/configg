@@ -7,12 +7,12 @@
 
 /* eslint no-new: 0 */
 
-var fs = require('fs')
-var _ = require('lodash')
-var assert = require('assert')
-var Config = require('../src/config')
-var hashtree = require('hashtree').hashTree
-var path = require('path')
+const fs = require('fs')
+const _ = require('lodash')
+const assert = require('assert')
+const Config = require('../src/config')
+const hashtree = require('hashtree').hashTree
+const path = require('path')
 
 process.env.SUPPRESS_NO_CONFIG_WARNING = 1
 
@@ -27,7 +27,7 @@ function log (obj, other) { // eslint-disable-line
  * diff o1 with o2. Assert if o1 and o2 are not the same
  */
 function deepEqual (o1, o2) {
-  var res = hashtree.diff(o1, o2)
+  const res = hashtree.diff(o1, o2)
   assert.strictEqual(typeof o1, 'object')
   assert.strictEqual(typeof o2, 'object')
   assert.deepStrictEqual(res.diff1, res.diff2)
@@ -49,9 +49,9 @@ describe('#config', function () {
 
   describe('load configs', function () {
     it('module-a config', function () {
-      var cconfig = new Config()
-      var config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
+      const exp = {
         config: {
           'module-a': 'origin',
           override: 'module-a',
@@ -69,9 +69,9 @@ describe('#config', function () {
     })
 
     it('module-b config', function () {
-      var cconfig = new Config()
-      var config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-b'))
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-b'))
+      const exp = {
         config: {
           'module-b': 'origin',
           override: 'module-b',
@@ -89,9 +89,9 @@ describe('#config', function () {
     })
 
     it('module-c config', function () {
-      var cconfig = new Config()
-      var config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a/node_modules/module-c'))
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a/node_modules/module-c'))
+      const exp = {
         config: {
           'module-c': 'origin',
           override: 'module-c',
@@ -111,10 +111,10 @@ describe('#config', function () {
 
     it('module-c config merged with module-a', function () {
       process.env.NODE_CONFIG_DIR = path.join(__dirname, 'fixtures/prj/node_modules/module-a/config')
-      var cconfig = new Config()
-      var configA = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
-      var configAC = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a/node_modules/module-c'))
-      var expA = {
+      const cconfig = new Config()
+      const configA = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
+      const configAC = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a/node_modules/module-c'))
+      const expA = {
         config: {
           'module-a': 'origin',
           override: 'module-a',
@@ -128,7 +128,7 @@ describe('#config', function () {
           NODE_APP_INSTANCE: undefined
         }
       }
-      var expAC = {
+      const expAC = {
         config: {
           'module-c': 'origin',
           override: 'module-a',
@@ -150,10 +150,10 @@ describe('#config', function () {
 
     it('module-c config merged with module-b', function () {
       process.env.NODE_CONFIG_DIR = path.join(__dirname, 'fixtures/prj/node_modules/module-b/config')
-      var cconfig = new Config()
-      var configB = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-b'))
-      var configBC = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-b/node_modules/module-c'))
-      var expB = {
+      const cconfig = new Config()
+      const configB = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-b'))
+      const configBC = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-b/node_modules/module-c'))
+      const expB = {
         config: {
           'module-b': 'origin',
           override: 'module-b',
@@ -167,7 +167,7 @@ describe('#config', function () {
           NODE_APP_INSTANCE: undefined
         }
       }
-      var expBC = {
+      const expBC = {
         config: {
           'module-c@0.1.2': 'origin',
           override: 'module-b',
@@ -190,14 +190,14 @@ describe('#config', function () {
 
     it('sample-prj config', function () {
       process.env.NODE_CONFIG_DIR = path.join(__dirname, '/fixtures/prj/config')
-      var cconfig = new Config()
-      var config = cconfig.dir(path.join(__dirname, '/fixtures/prj'))
-      var configA = cconfig.dir(path.join(__dirname, '/fixtures/prj/node_modules/module-a'))
-      var configB = cconfig.dir(path.join(__dirname, '/fixtures/prj/node_modules/module-b'))
-      var configAC = cconfig.dir(path.join(__dirname, '/fixtures/prj/node_modules/module-a/node_modules/module-c'))
-      var configBC = cconfig.dir(path.join(__dirname, '/fixtures/prj/node_modules/module-b/node_modules/module-c'))
+      const cconfig = new Config()
+      const config = cconfig.dir(path.join(__dirname, '/fixtures/prj'))
+      const configA = cconfig.dir(path.join(__dirname, '/fixtures/prj/node_modules/module-a'))
+      const configB = cconfig.dir(path.join(__dirname, '/fixtures/prj/node_modules/module-b'))
+      const configAC = cconfig.dir(path.join(__dirname, '/fixtures/prj/node_modules/module-a/node_modules/module-c'))
+      const configBC = cconfig.dir(path.join(__dirname, '/fixtures/prj/node_modules/module-b/node_modules/module-c'))
 
-      var exp = {
+      const exp = {
         config: {
           'prj-default': 'origin',
           override: 'prj-default'
@@ -210,7 +210,7 @@ describe('#config', function () {
           NODE_APP_INSTANCE: undefined
         }
       }
-      var expA = {
+      const expA = {
         config: {
           'module-a': 'origin',
           override: 'prj-default',
@@ -225,7 +225,7 @@ describe('#config', function () {
           NODE_APP_INSTANCE: undefined
         }
       }
-      var expB = {
+      const expB = {
         config: {
           'module-b': 'origin',
           override: 'prj-default',
@@ -240,7 +240,7 @@ describe('#config', function () {
           NODE_APP_INSTANCE: undefined
         }
       }
-      var expAC = {
+      const expAC = {
         config: {
           'module-c': 'origin',
           override: 'prj-default',
@@ -255,7 +255,7 @@ describe('#config', function () {
           NODE_APP_INSTANCE: undefined
         }
       }
-      var expBC = {
+      const expBC = {
         config: {
           'module-c@0.1.2': 'origin',
           override: 'prj-default',
@@ -283,8 +283,8 @@ describe('#config', function () {
     it('with NODE_CONFIG_DIR', function () {
       process.env.NODE_CONFIG_DIR = path.join(__dirname, 'fixtures/prj/config')
 
-      var cconfig = new Config()
-      var exp = {
+      const cconfig = new Config()
+      const exp = {
         'sample-prj': {
           'prj-default': 'origin',
           override: 'prj-default'
@@ -317,9 +317,9 @@ describe('#config', function () {
     it('module-a with NODE_CONFIG_DIR', function () {
       process.env.NODE_CONFIG_DIR = path.join(__dirname, 'fixtures/prj/config')
 
-      var cconfig = new Config()
-      var config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
+      const exp = {
         config: {
           'module-a': 'origin',
           override: 'prj-default',
@@ -341,9 +341,9 @@ describe('#config', function () {
 
     it('module-a with NODE_CONFIG', function () {
       process.env.NODE_CONFIG = '{ "module-a": { "NODE_CONFIG": "origin" }, common: { "NODE_CONFIG": "origin" } }'
-      var cconfig = new Config()
-      var config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
+      const exp = {
         config: {
           'module-a': 'origin',
           override: 'module-a',
@@ -365,12 +365,12 @@ describe('#config', function () {
     })
 
     it('module-a with NODE_CONFIG which has a get property throws error', function () {
-      var err
+      let err
 
       process.env.NODE_CONFIG = '{ "module-a": { "NODE_CONFIG": "origin", get: "test" }, common: { "NODE_CONFIG": "origin" } }'
 
       try {
-        var cconfig = new Config()
+        const cconfig = new Config()
         cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
       } catch (e) {
         err = e
@@ -379,13 +379,13 @@ describe('#config', function () {
     })
 
     it('from empty directory', function () {
-      var dirname = path.join(__dirname, 'fixtures/empty')
+      const dirname = path.join(__dirname, 'fixtures/empty')
       try {
         fs.mkdirSync(dirname + '/config/')
       } catch (e) {}
-      var cconfig = new Config()
-      var config = cconfig.dir(dirname)
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(dirname)
+      const exp = {
         config: {},
         common: {
           NODE_ENV: 'development',
@@ -398,10 +398,10 @@ describe('#config', function () {
     })
 
     it('module-a config twice and test isolation', function () {
-      var cconfig = new Config()
-      var configA = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
-      var configB = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
-      var exp = {
+      const cconfig = new Config()
+      const configA = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
+      const configB = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
+      const exp = {
         config: {
           'module-a': 'origin',
           override: 'module-a',
@@ -425,7 +425,7 @@ describe('#config', function () {
     })
 
     it('from current file', function () {
-      var config = new Config().dir()
+      const config = new Config().dir()
       assert.deepStrictEqual(config.config.get(config), { default: true, development: true })
     })
   })
@@ -434,9 +434,9 @@ describe('#config', function () {
     describe('for myapp', function () {
       clear()
       process.env.NODE_CONFIG_DIR = path.join(__dirname, 'fixtures/myapp/config')
-      var cconfig = new Config()
-      var config = cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
+      const exp = {
         config: {
           database: {
             host: 'dbhost',
@@ -482,9 +482,9 @@ describe('#config', function () {
       process.env.NODE_ENV = 'production'
       process.env.NODE_CONFIG_DIR = path.join(__dirname, 'fixtures/myapp/config')
 
-      var cconfig = new Config()
-      var config = cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
+      const exp = {
         config: {
           database: {
             host: 'dbhost-prod',
@@ -514,9 +514,9 @@ describe('#config', function () {
       process.env.HOSTNAME = 'myserver'
       process.env.NODE_CONFIG_DIR = path.join(__dirname, 'fixtures/myapp/config')
 
-      var cconfig = new Config()
-      var config = cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
+      const exp = {
         config: {
           database: {
             host: 'dbhost-myserver',
@@ -547,9 +547,9 @@ describe('#config', function () {
       process.env.HOSTNAME = 'myserver'
       process.env.NODE_CONFIG_DIR = path.join(__dirname, 'fixtures/myapp/config')
 
-      var cconfig = new Config()
-      var config = cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
+      const exp = {
         config: {
           database: {
             host: 'dbhost-myserver-prod',
@@ -577,9 +577,9 @@ describe('#config', function () {
     })
 
     it('for module test', function () {
-      var cconfig = new Config()
-      var config = cconfig.dir(path.join(__dirname, 'fixtures/test'))
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(path.join(__dirname, 'fixtures/test'))
+      const exp = {
         config: {
           url: 'http://default/',
           local: 2
@@ -597,12 +597,12 @@ describe('#config', function () {
 
     it('for module test in app context of myapp', function () {
       process.env.NODE_CONFIG_DIR = path.join(__dirname, 'fixtures/myapp/config')
-      var cconfig = new Config()
+      const cconfig = new Config()
       // first "require" from myapp
       cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
       // second "require" from module "test"
-      var config = cconfig.dir(path.join(__dirname, 'fixtures/test'))
-      var exp = {
+      const config = cconfig.dir(path.join(__dirname, 'fixtures/test'))
+      const exp = {
         config: {
           url: 'http://foo.bar/',
           local: 2,
@@ -622,15 +622,15 @@ describe('#config', function () {
 
   describe('strict mode', function () {
     it('good case', function () {
-      var dir = path.join(__dirname, 'fixtures/strictmode')
+      const dir = path.join(__dirname, 'fixtures/strictmode')
       _.merge(process.env, {
         NODE_CONFIG_STRICT_MODE: 'Y',
         NODE_CONFIG_DIR: dir + '/configdir',
         NODE_ENV: 'production'
       })
-      var cconfig = new Config()
-      var config = cconfig.dir(dir)
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(dir)
+      const exp = {
         config: {
           config: true,
           './config': true,
@@ -647,8 +647,8 @@ describe('#config', function () {
       assert.deepStrictEqual(config, exp)
     })
     it('failure NODE_ENV=test', function () {
-      var err
-      var dir = path.join(__dirname, 'fixtures/strictmode')
+      let err
+      const dir = path.join(__dirname, 'fixtures/strictmode')
       _.merge(process.env, {
         NODE_CONFIG_STRICT_MODE: 'Y',
         NODE_CONFIG_DIR: dir + '/configdir',
@@ -662,16 +662,16 @@ describe('#config', function () {
       assert.strictEqual(err.message, 'strict mode failed!')
     })
     it('good case NODE_APP_INSTANCE', function () {
-      var dir = path.join(__dirname, 'fixtures/strictmode')
+      const dir = path.join(__dirname, 'fixtures/strictmode')
       _.merge(process.env, {
         NODE_CONFIG_STRICT_MODE: 'Y',
         NODE_APP_INSTANCE: 2,
         NODE_CONFIG_DIR: dir + '/configdir',
         NODE_ENV: 'production'
       })
-      var cconfig = new Config()
-      var config = cconfig.dir(dir)
-      var exp = {
+      const cconfig = new Config()
+      const config = cconfig.dir(dir)
+      const exp = {
         config: {
           config: true,
           './config': true,
@@ -689,8 +689,8 @@ describe('#config', function () {
       assert.deepStrictEqual(config, exp)
     })
     it('failure NODE_APP_INSTANCE', function () {
-      var err
-      var dir = path.join(__dirname, 'fixtures/strictmode')
+      let err
+      const dir = path.join(__dirname, 'fixtures/strictmode')
       _.merge(process.env, {
         NODE_CONFIG_STRICT_MODE: 'Y',
         NODE_APP_INSTANCE: 1,

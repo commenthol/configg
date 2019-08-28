@@ -1,11 +1,11 @@
 'use strict'
 
-var config = require('configg')(__dirname)
+const config = require('configg')(__dirname)
 
-var moduleA = require('module-a')
-var moduleB = require('module-b')
+const moduleA = require('module-a')
+const moduleB = require('module-b')
 
-var M = function () {
+const M = function () {
   return {
     prj: config,
     a: moduleA(),
