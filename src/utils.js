@@ -263,4 +263,24 @@ utils.findDirname = function () {
   return dirname
 }
 
+/**
+ * Print config informartion to console if
+ * `NODE_DEBUG=config` is set
+ *
+ * @param {String} dir - dirname of module config
+ * @param {Object} conf - the config object
+ */
+utils.debugConfig = function (dir, conf) {
+  const str = JSON.stringify(conf, (key, value) => {
+    if (typeof value === 'object' && value.type === 'Buffer' && value.data) {
+      return 'Buffer(\'' + Buffer.from(value.data).toString('base64') + '\')'
+    } else if (typeof value === 'function') {
+      return value.toString()
+    }
+    return value
+  }, 2)
+  log('%s %s', dir, str)
+  return str
+}
+
 module.exports = utils

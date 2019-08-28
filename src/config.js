@@ -8,7 +8,6 @@
 
 // module dependencies
 const _ = require('lodash')
-const log = require('debug')('configg')
 const File = require('./files')
 const envVar = require('./envvar')
 const utils = require('./utils')
@@ -72,7 +71,7 @@ Config.prototype.dir = function (dirname) {
   bindr(conf.config)
   bindr(conf.common)
 
-  debugConfig(dirname, conf)
+  utils.debugConfig(dirname, conf)
 
   return conf
 }
@@ -193,20 +192,3 @@ Config.prototype.addAppEntry = function (obj) {
 }
 
 module.exports = Config
-
-/**
- * Print config informartion to console if
- * `NODE_DEBUG=config` is set
- *
- * @param {String} dir - dirname of module config
- * @param {Object} conf - the config object
- */
-function debugConfig (dir, conf) {
-  log('%s %s', dir, JSON.stringify(conf,
-    function (key, value) {
-      if (typeof value === 'function') {
-        return value.toString()
-      }
-      return value
-    }, 2))
-}

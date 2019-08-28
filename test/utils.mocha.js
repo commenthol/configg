@@ -339,4 +339,19 @@ describe('#utils', function () {
       assert.ok(!res)
     })
   })
+
+  describe('#debugConfig', function () {
+    it('shall output functions', function () {
+      const config = { config: { fn: function (test) { return test } } }
+      const res = utils.debugConfig(__dirname, config)
+      const exp = '{\n  "config": {\n    "fn": "function (test) { return test }"\n  }\n}'
+      assert.strictEqual(res, exp)
+    })
+    it('shall output Buffer base64 encoded', function () {
+      const config = { config: { buffer: Buffer.from('abcdef') } }
+      const res = utils.debugConfig(__dirname, config)
+      const exp = '{\n  "config": {\n    "buffer": "Buffer(\'YWJjZGVm\')"\n  }\n}'
+      assert.strictEqual(res, exp)
+    })
+  })
 })
