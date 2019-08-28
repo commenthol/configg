@@ -5,10 +5,7 @@
 
 'use strict'
 
-/* global describe, it, beforeEach */
-/* eslint
-   no-new: 0
-*/
+/* eslint no-new: 0 */
 
 var fs = require('fs')
 var _ = require('lodash')
@@ -55,17 +52,17 @@ describe('#config', function () {
       var cconfig = new Config()
       var config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
       var exp = {
-        'config': {
+        config: {
           'module-a': 'origin',
-          'override': 'module-a',
-          'url': 'xtp://module-a'
+          override: 'module-a',
+          url: 'xtp://module-a'
         },
-        'common': {
-          'module': 'module-a',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'module-a',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
       deepEqual(config, exp)
@@ -75,17 +72,17 @@ describe('#config', function () {
       var cconfig = new Config()
       var config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-b'))
       var exp = {
-        'config': {
+        config: {
           'module-b': 'origin',
-          'override': 'module-b',
-          'url': 'xtp://module-b'
+          override: 'module-b',
+          url: 'xtp://module-b'
         },
-        'common': {
-          'module': 'module-b',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'module-b',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
       deepEqual(config, exp)
@@ -95,17 +92,17 @@ describe('#config', function () {
       var cconfig = new Config()
       var config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a/node_modules/module-c'))
       var exp = {
-        'config': {
+        config: {
           'module-c': 'origin',
-          'override': 'module-c',
-          'url': 'xtp://module-c'
+          override: 'module-c',
+          url: 'xtp://module-c'
         },
-        'common': {
-          'module': 'module-c',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'module-c',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
 
@@ -118,32 +115,32 @@ describe('#config', function () {
       var configA = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
       var configAC = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a/node_modules/module-c'))
       var expA = {
-        'config': {
+        config: {
           'module-a': 'origin',
-          'override': 'module-a',
-          'url': 'xtp://module-a'
+          override: 'module-a',
+          url: 'xtp://module-a'
         },
-        'common': {
-          'module': 'module-a',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'module-a',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
       var expAC = {
-        'config': {
+        config: {
           'module-c': 'origin',
-          'override': 'module-a',
-          'url': 'xtp://module-c',
+          override: 'module-a',
+          url: 'xtp://module-c',
           'module-a': 'origin'
         },
-        'common': {
-          'module': 'module-a',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'module-a',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
 
@@ -157,33 +154,33 @@ describe('#config', function () {
       var configB = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-b'))
       var configBC = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-b/node_modules/module-c'))
       var expB = {
-        'config': {
+        config: {
           'module-b': 'origin',
-          'override': 'module-b',
-          'url': 'xtp://module-b'
+          override: 'module-b',
+          url: 'xtp://module-b'
         },
-        'common': {
-          'module': 'module-b',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'module-b',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
       var expBC = {
-        'config': {
+        config: {
           'module-c@0.1.2': 'origin',
-          'override': 'module-b',
-          'url': 'xtp://module-c',
+          override: 'module-b',
+          url: 'xtp://module-c',
           'v0.1.2': 'only',
           'module-b': 'origin'
         },
-        'common': {
-          'module': 'module-b',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'module-b',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
 
@@ -201,77 +198,77 @@ describe('#config', function () {
       var configBC = cconfig.dir(path.join(__dirname, '/fixtures/prj/node_modules/module-b/node_modules/module-c'))
 
       var exp = {
-        'config': {
+        config: {
           'prj-default': 'origin',
-          'override': 'prj-default'
+          override: 'prj-default'
         },
-        'common': {
-          'module': 'prj',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'prj',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
       var expA = {
-        'config': {
+        config: {
           'module-a': 'origin',
-          'override': 'prj-default',
-          'url': 'xtp://module-a',
+          override: 'prj-default',
+          url: 'xtp://module-a',
           'prj-default': 'origin'
         },
-        'common': {
-          'module': 'prj',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'prj',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
       var expB = {
-        'config': {
+        config: {
           'module-b': 'origin',
-          'override': 'prj-default',
-          'url': 'xtp://module-b',
+          override: 'prj-default',
+          url: 'xtp://module-b',
           'prj-default': 'origin'
         },
-        'common': {
-          'module': 'prj',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'prj',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
       var expAC = {
-        'config': {
+        config: {
           'module-c': 'origin',
-          'override': 'prj-default',
-          'url': 'xtp://module-c',
+          override: 'prj-default',
+          url: 'xtp://module-c',
           'prj-default': 'origin'
         },
-        'common': {
-          'module': 'prj',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'prj',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
       var expBC = {
-        'config': {
+        config: {
           'module-c@0.1.2': 'origin',
-          'override': 'prj-default',
-          'url': 'xtp://module-c',
+          override: 'prj-default',
+          url: 'xtp://module-c',
           'v0.1.2': 'only',
           'prj-default': 'v0.1.2 only'
         },
-        'common': {
-          'module': 'prj',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'prj',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
 
@@ -290,27 +287,27 @@ describe('#config', function () {
       var exp = {
         'sample-prj': {
           'prj-default': 'origin',
-          'override': 'prj-default'
+          override: 'prj-default'
         },
         'module-a': {
           'prj-default': 'origin',
-          'override': 'prj-default'
+          override: 'prj-default'
         },
         'module-b': {
           'prj-default': 'origin',
-          'override': 'prj-default'
+          override: 'prj-default'
         },
         'module-c': {
           'prj-default': 'origin',
-          'override': 'prj-default'
+          override: 'prj-default'
         },
         'module-c@0.1.2': {
           'prj-default': 'v0.1.2 only',
-          'override': 'prj-default'
+          override: 'prj-default'
         },
-        'common': {
-          'module': 'prj',
-          'type': 'default'
+        common: {
+          module: 'prj',
+          type: 'default'
         }
       }
 
@@ -323,18 +320,18 @@ describe('#config', function () {
       var cconfig = new Config()
       var config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
       var exp = {
-        'config': {
+        config: {
           'module-a': 'origin',
-          'override': 'prj-default',
-          'url': 'xtp://module-a',
+          override: 'prj-default',
+          url: 'xtp://module-a',
           'prj-default': 'origin'
         },
-        'common': {
-          'module': 'prj',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'prj',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
 
@@ -347,19 +344,19 @@ describe('#config', function () {
       var cconfig = new Config()
       var config = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
       var exp = {
-        'config': {
+        config: {
           'module-a': 'origin',
-          'override': 'module-a',
-          'url': 'xtp://module-a',
-          'NODE_CONFIG': 'origin'
+          override: 'module-a',
+          url: 'xtp://module-a',
+          NODE_CONFIG: 'origin'
         },
-        'common': {
-          'module': 'module-a',
-          'type': 'default',
-          'NODE_CONFIG': 'origin',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'module-a',
+          type: 'default',
+          NODE_CONFIG: 'origin',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
 
@@ -389,11 +386,11 @@ describe('#config', function () {
       var cconfig = new Config()
       var config = cconfig.dir(dirname)
       var exp = {
-        'config': {},
-        'common': {
-          'NODE_ENV': 'development',
-          'NODE_APP_INSTANCE': undefined,
-          'HOSTNAME': 'server'
+        config: {},
+        common: {
+          NODE_ENV: 'development',
+          NODE_APP_INSTANCE: undefined,
+          HOSTNAME: 'server'
         }
       }
 
@@ -405,17 +402,17 @@ describe('#config', function () {
       var configA = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
       var configB = cconfig.dir(path.join(__dirname, 'fixtures/prj/node_modules/module-a'))
       var exp = {
-        'config': {
+        config: {
           'module-a': 'origin',
-          'override': 'module-a',
-          'url': 'xtp://module-a'
+          override: 'module-a',
+          url: 'xtp://module-a'
         },
-        'common': {
-          'module': 'module-a',
-          'type': 'default',
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server',
-          'NODE_APP_INSTANCE': undefined
+        common: {
+          module: 'module-a',
+          type: 'default',
+          NODE_ENV: 'development',
+          HOSTNAME: 'server',
+          NODE_APP_INSTANCE: undefined
         }
       }
       // both configs are different objects
@@ -440,25 +437,25 @@ describe('#config', function () {
       var cconfig = new Config()
       var config = cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
       var exp = {
-        'config': {
-          'database': {
-            'host': 'dbhost',
-            'name': 'dbtest',
-            'port': 1529
+        config: {
+          database: {
+            host: 'dbhost',
+            name: 'dbtest',
+            port: 1529
           },
-          'array': [
+          array: [
             1,
             '2',
             3.01
           ],
-          'local': 1
+          local: 1
         },
-        'common': {
-          'value': 'test',
-          'local': 3,
-          'NODE_ENV': 'development',
-          'NODE_APP_INSTANCE': undefined,
-          'HOSTNAME': 'server'
+        common: {
+          value: 'test',
+          local: 3,
+          NODE_ENV: 'development',
+          NODE_APP_INSTANCE: undefined,
+          HOSTNAME: 'server'
         }
       }
       it('loads config', function () {
@@ -488,25 +485,25 @@ describe('#config', function () {
       var cconfig = new Config()
       var config = cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
       var exp = {
-        'config': {
-          'database': {
-            'host': 'dbhost-prod',
-            'name': 'dbprod',
-            'port': 1529
+        config: {
+          database: {
+            host: 'dbhost-prod',
+            name: 'dbprod',
+            port: 1529
           },
-          'array': [
+          array: [
             1,
             '2',
             3.01
           ],
-          'local': 1
+          local: 1
         },
-        'common': {
-          'value': 'production',
-          'production': 'filename',
-          'local': 3,
-          'NODE_ENV': 'production',
-          'HOSTNAME': 'server'
+        common: {
+          value: 'production',
+          production: 'filename',
+          local: 3,
+          NODE_ENV: 'production',
+          HOSTNAME: 'server'
         }
       }
       // ~ console.log(JSON.stringify(config,null,'\t'))
@@ -520,24 +517,24 @@ describe('#config', function () {
       var cconfig = new Config()
       var config = cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
       var exp = {
-        'config': {
-          'database': {
-            'host': 'dbhost-myserver',
-            'name': 'dbmyserver',
-            'port': 1529
+        config: {
+          database: {
+            host: 'dbhost-myserver',
+            name: 'dbmyserver',
+            port: 1529
           },
-          'array': [
+          array: [
             1,
             '2',
             3.01
           ],
-          'local': 1
+          local: 1
         },
-        'common': {
-          'value': 'test',
-          'local': 3,
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'myserver'
+        common: {
+          value: 'test',
+          local: 3,
+          NODE_ENV: 'development',
+          HOSTNAME: 'myserver'
         }
       }
 
@@ -553,25 +550,25 @@ describe('#config', function () {
       var cconfig = new Config()
       var config = cconfig.dir(path.join(__dirname, 'fixtures/myapp'))
       var exp = {
-        'config': {
-          'database': {
-            'host': 'dbhost-myserver-prod',
-            'name': 'dbmyserverprod',
-            'port': 1529
+        config: {
+          database: {
+            host: 'dbhost-myserver-prod',
+            name: 'dbmyserverprod',
+            port: 1529
           },
-          'array': [
+          array: [
             1,
             '2',
             3.01
           ],
-          'local': 1
+          local: 1
         },
-        'common': {
-          'value': 'production',
-          'production': 'filename',
-          'local': 3,
-          'NODE_ENV': 'production',
-          'HOSTNAME': 'myserver'
+        common: {
+          value: 'production',
+          production: 'filename',
+          local: 3,
+          NODE_ENV: 'production',
+          HOSTNAME: 'myserver'
         }
       }
 
@@ -583,15 +580,15 @@ describe('#config', function () {
       var cconfig = new Config()
       var config = cconfig.dir(path.join(__dirname, 'fixtures/test'))
       var exp = {
-        'config': {
-          'url': 'http://default/',
-          'local': 2
+        config: {
+          url: 'http://default/',
+          local: 2
         },
-        'common': {
-          'value': 'test',
-          'local': 3,
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server'
+        common: {
+          value: 'test',
+          local: 3,
+          NODE_ENV: 'development',
+          HOSTNAME: 'server'
         }
       }
 
@@ -606,16 +603,16 @@ describe('#config', function () {
       // second "require" from module "test"
       var config = cconfig.dir(path.join(__dirname, 'fixtures/test'))
       var exp = {
-        'config': {
-          'url': 'http://foo.bar/',
-          'local': 2,
-          'cors': false
+        config: {
+          url: 'http://foo.bar/',
+          local: 2,
+          cors: false
         },
-        'common': {
-          'value': 'test',
-          'local': 3,
-          'NODE_ENV': 'development',
-          'HOSTNAME': 'server'
+        common: {
+          value: 'test',
+          local: 3,
+          NODE_ENV: 'development',
+          HOSTNAME: 'server'
         }
       }
 
@@ -638,7 +635,7 @@ describe('#config', function () {
           config: true,
           './config': true,
           './configdir': true,
-          'default': true,
+          default: true,
           production: true
         },
         common: {
@@ -675,18 +672,18 @@ describe('#config', function () {
       var cconfig = new Config()
       var config = cconfig.dir(dir)
       var exp = {
-        'config': {
-          'config': true,
+        config: {
+          config: true,
           './config': true,
           './configdir': true,
-          'default': true,
-          'production': true,
-          'instance': 2
+          default: true,
+          production: true,
+          instance: 2
         },
-        'common': {
-          'NODE_ENV': 'production',
-          'NODE_APP_INSTANCE': '2',
-          'HOSTNAME': 'server'
+        common: {
+          NODE_ENV: 'production',
+          NODE_APP_INSTANCE: '2',
+          HOSTNAME: 'server'
         }
       }
       assert.deepStrictEqual(config, exp)

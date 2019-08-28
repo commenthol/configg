@@ -5,8 +5,6 @@
 
 'use strict'
 
-/* global describe, it */
-
 var assert = require('assert')
 var toNumber = require('../src/tonumber')
 

@@ -5,8 +5,6 @@
 
 'use strict'
 
-/* global describe, it */
-
 var path = require('path')
 var assert = require('assert')
 var utils = require('../src/utils')
@@ -127,8 +125,8 @@ describe('#utils', function () {
     it('prj', function () {
       var res = utils.discoverModuleNameVersion(path.join(__dirname, 'fixtures/prj/config/'))
       var exp = {
-        'name': 'sample-prj',
-        'version': '0.1.0'
+        name: 'sample-prj',
+        version: '0.1.0'
       }
       assert.deepStrictEqual(res, exp)
     })
@@ -145,8 +143,8 @@ describe('#utils', function () {
     it('module-a', function () {
       var res = utils.discoverModuleNameVersion(path.join(__dirname, 'fixtures/prj/node_modules/module-a/config/'))
       var exp = {
-        'name': 'module-a',
-        'version': '0.1.0'
+        name: 'module-a',
+        version: '0.1.0'
       }
       assert.deepStrictEqual(res, exp)
     })
@@ -156,11 +154,11 @@ describe('#utils', function () {
     it('read existing dir', function () {
       var files = utils.readDir(path.join(__dirname, 'fixtures/'))
       var exp = {
-        'empty': 1,
-        'myapp': 1,
-        'prj': 1,
-        'test': 1,
-        'strictmode': 1
+        empty: 1,
+        myapp: 1,
+        prj: 1,
+        test: 1,
+        strictmode: 1
       }
 
       function toObj (arr) {
@@ -193,28 +191,28 @@ describe('#utils', function () {
   describe('#env', function () {
     it('return desired values', function () {
       var env = {
-        'NODE_ENV': 'test',
-        'NODE_APP_INSTANCE': 2,
-        'HOSTNAME': 'www',
-        'OTHER': 0
+        NODE_ENV: 'test',
+        NODE_APP_INSTANCE: 2,
+        HOSTNAME: 'www',
+        OTHER: 0
       }
       var exp = {
-        'NODE_ENV': 'test',
-        'NODE_APP_INSTANCE': 2,
-        'HOSTNAME': 'www'
+        NODE_ENV: 'test',
+        NODE_APP_INSTANCE: 2,
+        HOSTNAME: 'www'
       }
       var res = utils.env(env)
       assert.deepStrictEqual(res, exp)
     })
     it('return desired custom values', function () {
       var env = {
-        'NODE_ENV': 'test',
-        'NODE_APP_INSTANCE': 2,
-        'HOSTNAME': 'www',
-        'OTHER': 0
+        NODE_ENV: 'test',
+        NODE_APP_INSTANCE: 2,
+        HOSTNAME: 'www',
+        OTHER: 0
       }
       var exp = {
-        'NODE_ENV': 'test'
+        NODE_ENV: 'test'
       }
       var res = utils.env(env, ['NODE_ENV'])
       assert.deepStrictEqual(res, exp)
@@ -224,9 +222,9 @@ describe('#utils', function () {
   describe('#strictModeCheck', function () {
     it('no strict mode set', function () {
       var env = {
-        'NODE_ENV': 'development',
-        'NODE_APP_INSTANCE': 2,
-        'NODE_CONFIG_DIR': '.'
+        NODE_ENV: 'development',
+        NODE_APP_INSTANCE: 2,
+        NODE_CONFIG_DIR: '.'
       }
       var filesFound = ['default', 'development', 'test', 'production', 'local']
       var res = utils.strictModeCheck(env, filesFound)
@@ -234,10 +232,10 @@ describe('#utils', function () {
     })
     it('NODE_ENV is default', function () {
       var env = {
-        'NODE_CONFIG_STRICT_MODE': 1,
-        'NODE_ENV': 'default',
-        'NODE_APP_INSTANCE': 2,
-        'NODE_CONFIG_DIR': '.'
+        NODE_CONFIG_STRICT_MODE: 1,
+        NODE_ENV: 'default',
+        NODE_APP_INSTANCE: 2,
+        NODE_CONFIG_DIR: '.'
       }
       var filesFound = ['default', 'development', 'test', 'production', 'local']
 
@@ -246,10 +244,10 @@ describe('#utils', function () {
     })
     it('NODE_ENV is local', function () {
       var env = {
-        'NODE_CONFIG_STRICT_MODE': 1,
-        'NODE_ENV': 'local',
-        'NODE_APP_INSTANCE': 2,
-        'NODE_CONFIG_DIR': '.'
+        NODE_CONFIG_STRICT_MODE: 1,
+        NODE_ENV: 'local',
+        NODE_APP_INSTANCE: 2,
+        NODE_CONFIG_DIR: '.'
       }
       var filesFound = ['default', 'development', 'test', 'production', 'local']
 
@@ -258,10 +256,10 @@ describe('#utils', function () {
     })
     it('NODE_ENV is development', function () {
       var env = {
-        'NODE_CONFIG_STRICT_MODE': 1,
-        'NODE_ENV': 'development',
-        'NODE_APP_INSTANCE': 2,
-        'NODE_CONFIG_DIR': '.'
+        NODE_CONFIG_STRICT_MODE: 1,
+        NODE_ENV: 'development',
+        NODE_APP_INSTANCE: 2,
+        NODE_CONFIG_DIR: '.'
       }
       var filesFound = ['default', 'development', 'test', 'production', 'local']
 
@@ -270,9 +268,9 @@ describe('#utils', function () {
     })
     it('NODE_ENV is production and file exists', function () {
       var env = {
-        'NODE_CONFIG_STRICT_MODE': 1,
-        'NODE_ENV': 'production',
-        'NODE_CONFIG_DIR': '.'
+        NODE_CONFIG_STRICT_MODE: 1,
+        NODE_ENV: 'production',
+        NODE_CONFIG_DIR: '.'
       }
       var filesFound = ['default', 'development', 'test', 'production', 'local']
 
@@ -281,9 +279,9 @@ describe('#utils', function () {
     })
     it('NODE_ENV is production and file not exists', function () {
       var env = {
-        'NODE_CONFIG_STRICT_MODE': 1,
-        'NODE_ENV': 'production',
-        'NODE_CONFIG_DIR': '.'
+        NODE_CONFIG_STRICT_MODE: 1,
+        NODE_ENV: 'production',
+        NODE_CONFIG_DIR: '.'
       }
       var filesFound = ['default', 'development', 'test', 'preproduction', 'local']
 
@@ -292,10 +290,10 @@ describe('#utils', function () {
     })
     it('NODE_ENV is production, NODE_APP_INSTANCE is 2 and file exists', function () {
       var env = {
-        'NODE_CONFIG_STRICT_MODE': 1,
-        'NODE_ENV': 'production',
-        'NODE_APP_INSTANCE': 2,
-        'NODE_CONFIG_DIR': '.'
+        NODE_CONFIG_STRICT_MODE: 1,
+        NODE_ENV: 'production',
+        NODE_APP_INSTANCE: 2,
+        NODE_CONFIG_DIR: '.'
       }
       var filesFound = ['default', 'development', 'test', 'production-2', 'local']
 
@@ -304,10 +302,10 @@ describe('#utils', function () {
     })
     it('NODE_ENV is production, NODE_APP_INSTANCE is 2 and file not exists', function () {
       var env = {
-        'NODE_CONFIG_STRICT_MODE': 1,
-        'NODE_ENV': 'production',
-        'NODE_APP_INSTANCE': 2,
-        'NODE_CONFIG_DIR': '.'
+        NODE_CONFIG_STRICT_MODE: 1,
+        NODE_ENV: 'production',
+        NODE_APP_INSTANCE: 2,
+        NODE_CONFIG_DIR: '.'
       }
       var filesFound = ['default', 'development', 'test', 'production-1', 'local']
 
@@ -316,11 +314,11 @@ describe('#utils', function () {
     })
     it('NODE_ENV is production, NODE_APP_INSTANCE is 2, HOSTNAME is server and file exists', function () {
       var env = {
-        'NODE_CONFIG_STRICT_MODE': 'HOSTNAME',
-        'NODE_ENV': 'production',
-        'HOSTNAME': 'server',
-        'NODE_APP_INSTANCE': 2,
-        'NODE_CONFIG_DIR': '.'
+        NODE_CONFIG_STRICT_MODE: 'HOSTNAME',
+        NODE_ENV: 'production',
+        HOSTNAME: 'server',
+        NODE_APP_INSTANCE: 2,
+        NODE_CONFIG_DIR: '.'
       }
       var filesFound = ['default', 'server-production-2']
 
@@ -329,11 +327,11 @@ describe('#utils', function () {
     })
     it('NODE_ENV is production, NODE_APP_INSTANCE is 2, HOSTNAME is server and file not exists', function () {
       var env = {
-        'NODE_CONFIG_STRICT_MODE': 'HOSTNAME',
-        'NODE_ENV': 'production',
-        'HOSTNAME': 'server',
-        'NODE_APP_INSTANCE': 2,
-        'NODE_CONFIG_DIR': '.'
+        NODE_CONFIG_STRICT_MODE: 'HOSTNAME',
+        NODE_ENV: 'production',
+        HOSTNAME: 'server',
+        NODE_APP_INSTANCE: 2,
+        NODE_CONFIG_DIR: '.'
       }
       var filesFound = ['default', 'myserver-production-2']
 

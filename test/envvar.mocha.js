@@ -5,8 +5,6 @@
 
 'use strict'
 
-/* global describe, it, before */
-
 var assert = require('assert')
 var env = require('../src/envvar')
 

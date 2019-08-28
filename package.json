@@ -53,18 +53,18 @@
     "hjson": "^3.1.2",
     "js-yaml": "^3.13.1",
     "json5": "^2.1.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "coffeescript": "^2.4.1",
     "cson": "^5.1.0",
-    "eslint": "^5.16.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.18.0",
+    "eslint": "^6.2.2",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "mocha": "^6.1.4",
+    "eslint-plugin-standard": "^4.0.1",
+    "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "properties": "^1.2.1",
     "toml": "^3.0.0"
