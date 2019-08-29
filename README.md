@@ -239,7 +239,7 @@ Further [documentation is here](./doc/documentation.md).
 If you contribute code to this project, you are implicitly allowing your
 code to be distributed under the MIT license. You are also implicitly
 verifying that all code is your original work or correctly attributed
-with the source of its origin and licence.
+with the source of its origin and license.
 
 ## License
 
