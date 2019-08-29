@@ -25,7 +25,7 @@ maintained by extracting name and version from the `package.json` file.
 This allows extending/ overwriting values for modules from your
 App-config or even a Module which includes other Sub-Modules.
 
-Credits and Acknoledgement go to [node-config][] for inspiration.
+Credits and acknowledgment go to [node-config][] for inspiration.
 
 ## Table of Contents
 
@@ -39,17 +39,18 @@ Credits and Acknoledgement go to [node-config][] for inspiration.
   * [HOSTNAME](#hostname)
   * [NODE_APP_INSTANCE](#node_app_instance)
   * [NODE_CONFIG](#node_config)
-  * [DEBUG=configg](#debug-configg)
+  * [DEBUG=configg](#debugconfigg)
   * [NODE_CONFIG_STRICT_MODE](#node_config_strict_mode)
 * [Overwriting](#overwriting)
 * [Configuration files](#configuration-files)
   * [Config File Structure](#config-file-structure)
   * [Methods of the "config" object](#methods-of-the-config-object)
-  * [File loading order](#file-loading-order)
-  * [Extension loading](#extension-loading)
+  * [File loading order](#File_loading_order)
+  * [Extension loading](#Extension_loading)
+  * [Plugins](#plugins)
   * [Merging](#merging)
   * [Parsing Errors](#parsing-errors)
-* [Security](#security)
+* [Security](#Security)
 * [References](#references)
 
 <!-- toc! -->
@@ -360,12 +361,16 @@ in.
 
 ````json
 {
-  "config": {
+  "config": { // mandatory
     "note": "your custom values go in here"
   },
-  "common": {
+  "common": { // optional
     "note": "values you like to share among ALL modules go in here"
-  }
+  },
+  "plugins": [ // optional
+    ["plugin-name"],
+    ["plugin-name-2", { "option": "one" }],
+  ]
 }
 ````
 
@@ -374,6 +379,9 @@ alongside all your modules of your App.
 
 `NODE_ENV`, `HOSTNAME` and `NODE_APP_INSTANCE` are set per default from
 the environment vars or process arguments.
+
+Optional `plugins` define the plugins (node-modules) to load and run.
+This allows to load or change (decrypt) configuration options.
 
 **Extended Structure for an App**
 
@@ -436,7 +444,7 @@ config.config.get(['one','b','notthere'])
 
 `{Any}` value found using keys or undefined
 
-<a name="File_loading_order"/>
+<a name="File_loading_order"></a>
 
 ### File loading order
 
@@ -507,7 +515,7 @@ loaded:
 4. myserver-production.js
 5. local.js
 
-<a name="Extension_loading"/>
+<a name="Extension_loading"></a>
 
 ### Extension loading
 
@@ -535,6 +543,29 @@ If using these file types please add the required dependencies to your project
 * [**.toml**](../test/fixtures/myapp/config/default.toml) : [TOML][];
   install with `npm i -S toml`
 
+### Plugins
+
+External plugins allow to load and change (e.g. decrypt) configuration options. 
+The mechanism to load and merge the obtained configuration objects is blocking. 
+
+It is recommended to add the `plugins` array in `default.x` to have the plugin 
+executed for all configuration environments.
+
+You may search for a list of [available plugins on npm](https://www.npmjs.com/search?q=keywords%3Aconfigg-plugin).
+
+Example `default.js` using plugin [configg-plugin-vault-nacl](https://npmjs.com/package/configg-plugin-vault-nacl).
+
+```js
+module.exports = {
+  config: {
+    secret: 'VAULT_NACL(AQAQJwAAXBM5xFKC...UUPMszDMwKnOLcK2c=)'
+  },
+  plugins: [
+    ['configg-plugin-vault-nacl']
+  ]
+}
+```
+
 ### Merging
 
 All files get merged in by their loading order. Arrays will **not** get
@@ -547,7 +578,7 @@ All errors encountered during parsing will throw an error immediately.
 Errors are **never** catched to allow a developer to find the origin of
 any error.
 
-<a name="Security"/>
+<a name="Security"></a>
 
 ## Security
 

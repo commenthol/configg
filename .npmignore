@@ -2,12 +2,11 @@
 /coverage
 /config
 /examples
-/docs
 /test
+/docs
 /tmp
 .*
 *.log
 *.tgz
 Makefile
-TODO.md
 yarn.lock

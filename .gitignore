@@ -1,6 +1,5 @@
 /node_modules
 /coverage
-/docs
 /tmp
 *.log
 *.tgz

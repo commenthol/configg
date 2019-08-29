@@ -23,14 +23,14 @@
   "author": "commenthol <commenthol@gmail.com>",
   "main": "index.js",
   "directories": {
-    "doc": "doc",
+    "docs": "docs",
     "test": "test"
   },
   "scripts": {
     "all": "npm run test && npm run lint",
     "clean": "rm -rf jsdoc coverage node_modules *.tgz",
     "cover": "nyc -r text -r html npm test",
-    "doc": "jsdox -o docs index.js src/*.js",
+    "docs": "jsdox -o docs/dox index.js src/*.js",
     "lint": "eslint src test config examples",
     "readme": "markedpp --github -i README.md -o README.md",
     "prepublishOnly": "npm run all",
