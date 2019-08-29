@@ -1,5 +1,17 @@
 # CHANGELOG
 
+### 2.0.0-3
+
+- f6dd07f feat: adding plugin support
+- e62e83d chore: replace lodash with lodash.merge
+- 6ccb129 feat: debug output Buffer as base64 encoded string
+- 7574ab0 chore: replace var with const, let
+- 67ad4fe docu: bash scripts running examples
+- 9884157 chore: move lib to src
+- b6a0e2b break: replace var with const n let
+- 5cb870d chore: deprecate node@6
+- 5cb870d break: exclude fileparsers from dependencies
+
 ### 1.2.3
 
 - 69f5010 bump dependencies
