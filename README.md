@@ -230,9 +230,11 @@ module.exports = {
 }
 ```
 
+If you like to write your own plugin check out [docs/plugins.md](./docs/plugins.md).
+
 ## Documentation
 
-Further [documentation is here](./doc/documentation.md).
+Further documentation is at [docs/documentation.md](./docs/documentation.md).
 
 ## Contribution and License Agreement
 
