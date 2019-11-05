@@ -1,6 +1,6 @@
 {
   "name": "configg",
-  "version": "2.0.0",
+  "version": "2.1.0-0",
   "description": "A node configuration manager",
   "keywords": [
     "conf",
@@ -32,8 +32,8 @@
     "cover": "nyc -r text -r html npm test",
     "docs": "jsdox -o docs/dox index.js src/*.js",
     "lint": "eslint src test config examples",
-    "readme": "markedpp --github -i README.md -o README.md",
     "prepublishOnly": "npm run all",
+    "readme": "markedpp --github -i README.md -o README.md",
     "test": "mocha"
   },
   "eslintConfig": {
@@ -48,7 +48,6 @@
   },
   "dependencies": {
     "at-line": "^1.0.0",
-    "deasync": "^0.1.15",
     "debug": "^4.1.1",
     "find-root": "^1.1.0",
     "hashtree": "^0.7.0",
@@ -60,6 +59,7 @@
   },
   "devDependencies": {
     "coffeescript": "^2.4.1",
+    "configg-plugin-vault-nacl": "^0.1.0",
     "cson": "^5.1.0",
     "eslint": "^6.2.2",
     "eslint-config-standard": "^14.1.0",
@@ -70,8 +70,10 @@
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "properties": "^1.2.1",
-    "toml": "^3.0.0",
-    "configg-plugin-vault-nacl": "^0.1.0"
+    "toml": "^3.0.0"
+  },
+  "peerDependencies": {
+    "deasync": "^0.1.15"
   },
   "engines": {
     "node": ">=8.0.0"

@@ -798,34 +798,4 @@ describe('#config', function () {
       }, /Decrypt failed at "common.value"/)
     })
   })
-
-  describe('plugin-async', function () {
-    const dir = path.join(__dirname, 'fixtures/plugin-async/config')
-
-    beforeEach(() => {
-      Reflect.deleteProperty(process.env, 'NODE_ENV')
-      Reflect.deleteProperty(process.env, 'NODE_CONFIG_STRICT_MODE')
-      Reflect.deleteProperty(process.env, 'NODE_APP_INSTANCE')
-    })
-
-    it('shall run plugin asynchronously', function () {
-      _merge(process.env, {
-        NODE_CONFIG_DIR: dir
-      })
-      const cconfig = new Config()
-      const config = cconfig.dir(dir)
-      const exp = {
-        config: {
-          default: true,
-          plugin: true
-        },
-        common: {
-          NODE_ENV: 'development',
-          NODE_APP_INSTANCE: undefined,
-          HOSTNAME: 'server'
-        }
-      }
-      assert.deepStrictEqual(config, exp)
-    })
-  })
 })
