@@ -23,8 +23,8 @@
   "author": "commenthol <commenthol@gmail.com>",
   "main": "index.js",
   "directories": {
-    "docs": "docs",
-    "test": "test"
+    "test": "test",
+    "docs": "docs"
   },
   "scripts": {
     "all": "npm run test && npm run lint",
@@ -38,13 +38,13 @@
   },
   "eslintConfig": {
     "env": {
-      "node": true,
-      "mocha": true
+      "mocha": true,
+      "node": true
     },
-    "extends": "standard",
     "plugins": [
       "standard"
-    ]
+    ],
+    "extends": "standard"
   },
   "dependencies": {
     "at-line": "^1.0.0",
@@ -54,8 +54,7 @@
     "hjson": "^3.2.1",
     "js-yaml": "^3.13.1",
     "json5": "^2.1.1",
-    "lodash.merge": "^4.6.2",
-    "vault-nacl": "^0.3.0"
+    "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
     "coffeescript": "^2.4.1",
